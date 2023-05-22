@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "813341630510",
+    "firebase_url": "https://smart-patient-monitoring-44c28-default-rtdb.firebaseio.com",
+    "project_id": "smart-patient-monitoring-44c28",
+    "storage_bucket": "smart-patient-monitoring-44c28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813341630510:android:df432121a8fc4c26c37fbf",
+        "android_client_info": {
+          "package_name": "com.example.smart_patient_monitoring_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813341630510-modrl6gv8ir6jtht0gia96b4oafc8152.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiKZmZZqetxoKT7el1I62Cyu5p9A_Je0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813341630510-ajacv31gk6einuttcimokv0i509p0d27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
