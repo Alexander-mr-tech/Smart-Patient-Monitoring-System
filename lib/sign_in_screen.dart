@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_patient_monitoring_system/home_screen.dart';
 import 'package:smart_patient_monitoring_system/sign_up.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -72,7 +73,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           radius: 30,
                           backgroundColor: Colors.grey,
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _navigateToHomeScreen(context);
+                            },
                             icon: const Icon(Icons.arrow_forward),
                           ),
                         )
@@ -121,4 +124,9 @@ class _SignInScreenState extends State<SignInScreen> {
 void _navigateToSignUp(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const SignUp()));
+}
+
+void _navigateToHomeScreen(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
 }
