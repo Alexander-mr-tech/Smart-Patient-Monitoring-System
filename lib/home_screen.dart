@@ -67,6 +67,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
+                          "42",
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 60.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "°F",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+          Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 400,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.indigoAccent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/room temperature.png",
+                        height: 75, width: 75),
+                    const Text(
+                      "Room Temperature",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
                           "97",
                           style: TextStyle(
                               color: Colors.redAccent,
@@ -85,42 +129,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               )),
-          // GridView.count(
-          //   crossAxisCount: 2,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Container(
-          //         height: 50,
-          //         width: 50,
-          //         color: Colors.greenAccent,
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Container(
-          //         height: 50,
-          //         width: 50,
-          //         color: Colors.pink,
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Container(
-          //         height: 50,
-          //         width: 50,
-          //         color: Colors.redAccent,
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Container(
-          //         height: 50,
-          //         width: 50,
-          //         color: Colors.blueAccent,
-          //       ),
-          //     )
-          //   ],
+          Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 400,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.indigoAccent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/room humidty.png",
+                        height: 75, width: 75),
+                    const Text(
+                      "Room Humidity",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "65",
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 60.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "%",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )),
         ],
       ),
     );
