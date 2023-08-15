@@ -38,6 +38,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   introduction_screen: ^3.1.8
   contactus: ^1.2.3
+  fluttertoast: ^8.2.1
+  firebase_auth: ^4.2.9
   cloud_firestore: ^4.8.1
   d_chart: ^2.2.11
 
