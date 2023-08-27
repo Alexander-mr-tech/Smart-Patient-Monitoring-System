@@ -59,9 +59,15 @@ class _SignInScreenState extends State<SignInScreen> {
       },
       child: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.white,
+                Colors.indigoAccent,
+              ],
+            )
+        ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
@@ -74,12 +80,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Image.asset(
-                      "assets/images/unilogo.png",
-                      fit: BoxFit.fill,
+                  const CircleAvatar(
+                    radius: 120,
+                    backgroundColor: Colors.indigoAccent,
+                    child: CircleAvatar(
+                      radius: 110,
+                      backgroundColor: Colors.white,
+                      backgroundImage:  AssetImage(
+                        "assets/images/ECG.png",
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -87,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const Text(
                     "SMART PATIENT\nMONITORING SYSTEM",textAlign:TextAlign.center,
-                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 34,color: Colors.black26),
+                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 34,color: Colors.deepPurpleAccent),
                   ),
                   const SizedBox(
                     height: 30,
@@ -100,11 +109,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
                             decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: 'Enter your Email here...',
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),
                                 prefixIcon: const Icon(Icons.email_outlined),
-                                prefixIconColor: Colors.blueAccent,
+                                prefixIconColor: Colors.redAccent,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
+
                                 )),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -121,7 +132,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: 'Enter your Password...',
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),
                                 prefixIcon: const Icon(Icons.password_sharp),
                                 prefixIconColor: Colors.blueAccent,
                                 border: OutlineInputBorder(

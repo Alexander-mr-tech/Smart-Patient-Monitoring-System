@@ -3,8 +3,11 @@ import 'package:smart_patient_monitoring_system/blood%20pressure.dart';
 import 'package:smart_patient_monitoring_system/contactus.dart';
 import 'package:smart_patient_monitoring_system/ecg_screen.dart';
 import 'package:smart_patient_monitoring_system/home_screen.dart';
+import 'package:smart_patient_monitoring_system/patient%20details.dart';
 import 'package:smart_patient_monitoring_system/patient_temp.dart';
 import 'package:smart_patient_monitoring_system/sign_in_screen.dart';
+
+import 'patient details.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -69,6 +72,16 @@ class MyDrawer extends StatelessWidget {
           const Divider(
             color: Colors.grey,
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.contacts),
+          //   title: const Text("Patient Details", style: TextStyle(fontSize: 20.0)),
+          //   onTap: () {
+          //     _navigateTopatient_details(context);
+          //   },
+          // ),
+          // const Divider(
+          //   color: Colors.grey,
+          // ),
           ListTile(
             leading: const Icon(Icons.contacts),
             title: const Text("Contact Us", style: TextStyle(fontSize: 20.0)),
@@ -124,3 +137,8 @@ void _navigateToLogOut_Screen(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => const SignInScreen()));
 }
+
+// void _navigateTopatient_details(BuildContext context) {
+//   Navigator.of(context)
+//       .push(MaterialPageRoute(builder: (context) => const patient_details(title: 'Patient Record',)));
+// }

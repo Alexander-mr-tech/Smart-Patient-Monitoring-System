@@ -59,9 +59,15 @@ class _SignUpState extends State<SignUp> {
       },
       child: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.indigoAccent,
+                Colors.white,
+              ],
+            )
+        ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
@@ -74,12 +80,15 @@ class _SignUpState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Image.asset(
-                      "assets/images/unilogo.png",
-                      fit: BoxFit.fill,
+                  const CircleAvatar(
+                    radius: 120,
+                    backgroundColor: Colors.indigoAccent,
+                    child: CircleAvatar(
+                      radius: 110,
+                      backgroundColor: Colors.white,
+                      backgroundImage:  AssetImage(
+                        "assets/images/ECG.png",
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -87,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const Text(
                     "SMART PATIENT\nMONITORING SYSTEM",textAlign:TextAlign.center,
-                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 34,color: Colors.black26),
+                    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 34,color: Colors.deepPurpleAccent),
                   ),
                   const SizedBox(
                     height: 30,
@@ -97,10 +106,11 @@ class _SignUpState extends State<SignUp> {
                       child: Column(
                         children: [
                           TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             controller: userController,
                             decoration: InputDecoration(
                                 hintText: 'User Name',
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),
                                 prefixIcon: const Icon(Icons.person),
                                 prefixIconColor: Colors.blueAccent,
                                 border: OutlineInputBorder(
@@ -120,7 +130,8 @@ class _SignUpState extends State<SignUp> {
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
                             decoration: InputDecoration(
-                                hintText: 'Email',
+                                hintText: 'Enter your Email here...',
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),
                                 prefixIcon: const Icon(Icons.email_outlined),
                                 prefixIconColor: Colors.blueAccent,
                                 border: OutlineInputBorder(
@@ -141,7 +152,8 @@ class _SignUpState extends State<SignUp> {
                             controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: 'Enter your Password',
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),
                                 prefixIcon: const Icon(Icons.password_sharp),
                                 prefixIconColor: Colors.blueAccent,
                                 border: OutlineInputBorder(

@@ -173,50 +173,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 )),
-            Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  width: 400,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.indigoAccent,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset("assets/images/ECG.png",
-                          height: 75, width: 75),
-                      const Text(
-                        "Blood\nPressure",textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "65",
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontSize: 60.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "%",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )),
+            // Padding(
+            //     padding: const EdgeInsets.all(10.0),
+            //     child: Container(
+            //       width: 400,
+            //       height: 120,
+            //       decoration: BoxDecoration(
+            //         color: Colors.indigoAccent,
+            //         borderRadius: BorderRadius.circular(20),
+            //       ),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: [
+            //           Image.asset("assets/images/ECG.png",
+            //               height: 75, width: 75),
+            //           const Text(
+            //             "Blood\nPressure",textAlign: TextAlign.center,
+            //             style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontSize: 24,
+            //                 fontWeight: FontWeight.bold),
+            //           ),
+            //           const Column(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               Text(
+            //                 "65",
+            //                 style: TextStyle(
+            //                     color: Colors.redAccent,
+            //                     fontSize: 60.0,
+            //                     fontWeight: FontWeight.bold),
+            //               ),
+            //               Text(
+            //                 "%",
+            //                 style: TextStyle(
+            //                     color: Colors.white,
+            //                     fontSize: 24.0,
+            //                     fontWeight: FontWeight.bold),
+            //               ),
+            //             ],
+            //           ),
+            //         ],
+            //       ),
+            //     )),
           ],
         ),
       );
