@@ -20,10 +20,19 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SizedBox(
+    return Scaffold(
+      body: Container(
         width: double.infinity,
-        child: Column(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.deepPurpleAccent,
+                Colors.cyan,
+              ],
+            )),
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(

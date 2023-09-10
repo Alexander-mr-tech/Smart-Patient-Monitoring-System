@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/drawer.dart';
 import 'package:d_chart/d_chart.dart';
 class Ecg_Screen extends StatefulWidget {
   const Ecg_Screen({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class _Ecg_ScreenState extends State<Ecg_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: const Drawer(),
       appBar: AppBar(
         title: const Text("ECG Status"),
         centerTitle: true,

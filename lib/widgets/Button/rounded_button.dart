@@ -17,8 +17,9 @@ class RoundButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 50,
+        width: 230,
         decoration: BoxDecoration(
-            color: Colors.indigo, borderRadius: BorderRadius.circular(10)),
+            color: Colors.lightBlue, borderRadius: BorderRadius.circular(20)),
         child: Center(
           child: loading
               ? const CircularProgressIndicator(
@@ -28,8 +29,10 @@ class RoundButton extends StatelessWidget {
               : Text(
             title,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 30,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Times New Roman',
             ),
           ),
         ),

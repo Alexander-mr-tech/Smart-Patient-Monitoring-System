@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:smart_patient_monitoring_system/drawer.dart';
+// import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
 //
 // class patient_details extends StatefulWidget {
 //   const patient_details({super.key, required this.title});

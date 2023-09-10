@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/drawer.dart';
+import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,225 +12,118 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const MyDrawer(),
-        appBar: AppBar(
-          title: const Text("Home Screen",style:TextStyle(color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold),
+      drawer: const MyDrawer(),
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.deepPurpleAccent,
+            Colors.cyan,
+          ],
+        )),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              "Welcome to \n Smart Patient\nMonitoring System",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Times New Roman',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.black),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 180.0,
+                          height: 180.0,
+                          decoration: BoxDecoration(
+                            color:
+                                Colors.white,
+                            border: Border.all(
+                              color: Colors.deepPurpleAccent,
+                              width: 3.0,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/unilogo.png',
+                            height: 140,
+                            width: 175,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Body \nTemperature",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        )
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 180.0,
+                          height: 180.0,
+                          decoration: BoxDecoration(
+                            color:
+                            Colors.white,
+                            border: Border.all(
+                              color: Colors.deepPurpleAccent,
+                              width: 3.0,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/unilogo.png',
+                            height: 140,
+                            width: 175,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Body \nTemperature",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20,),
+              ],
+            )
+          ],
+        ),
       ),
-          centerTitle: true,
-          shadowColor: Colors.indigoAccent,
-        ),
-        body: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.white,
-                  Colors.indigoAccent,
-                ],
-              )
-          ),
-          child: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: 400,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.indigoAccent,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                        child: Text(
-                      "Welcome\nto\nSmart Patient Monitoring System",textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    )),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: 400,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.indigoAccent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/body temperature.png",
-                            height: 75, width: 75),
-                        const Text(
-                          " Patient Body\nTemperature",textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "97",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontSize: 60.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "°F",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: 400,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.indigoAccent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/room temperature.png",
-                            height: 75, width: 75),
-                        const Text(
-                          "Room\nTemperature",textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "97",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontSize: 60.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "°C",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: 400,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.indigoAccent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/room humidity.png",
-                            height: 75, width: 75),
-                        const Text(
-                          "Room\nHumidity",textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "65",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontSize: 60.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "%",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-              // Padding(
-              //     padding: const EdgeInsets.all(10.0),
-              //     child: Container(
-              //       width: 400,
-              //       height: 120,
-              //       decoration: BoxDecoration(
-              //         color: Colors.indigoAccent,
-              //         borderRadius: BorderRadius.circular(20),
-              //       ),
-              //       child: Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //         crossAxisAlignment: CrossAxisAlignment.center,
-              //         children: [
-              //           Image.asset("assets/images/ECG.png",
-              //               height: 75, width: 75),
-              //           const Text(
-              //             "Blood\nPressure",textAlign: TextAlign.center,
-              //             style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: 24,
-              //                 fontWeight: FontWeight.bold),
-              //           ),
-              //           const Column(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               Text(
-              //                 "65",
-              //                 style: TextStyle(
-              //                     color: Colors.redAccent,
-              //                     fontSize: 60.0,
-              //                     fontWeight: FontWeight.bold),
-              //               ),
-              //               Text(
-              //                 "%",
-              //                 style: TextStyle(
-              //                     color: Colors.white,
-              //                     fontSize: 24.0,
-              //                     fontWeight: FontWeight.bold),
-              //               ),
-              //             ],
-              //           ),
-              //         ],
-              //       ),
-              //     )),
-            ],
-          ),
-        ),
-      );
+    );
   }
 }

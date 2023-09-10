@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/drawer.dart';
 import 'package:d_chart/d_chart.dart';
+import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
+
 class Blood_Pressure extends StatefulWidget {
   const Blood_Pressure({Key? key}) : super(key: key);
 
@@ -12,7 +13,7 @@ class _Blood_PressureState extends State<Blood_Pressure> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text("Blood Pressure Screen"),
         centerTitle: true,

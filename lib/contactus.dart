@@ -1,11 +1,11 @@
 import 'package:contactus/contactus.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/drawer.dart';
 
 class Contact_Us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Drawer(),
           appBar: AppBar(
             centerTitle: true,
             title: const Text('Contact Us'),
@@ -34,7 +34,6 @@ class Contact_Us extends StatelessWidget {
               twitterHandle: '',
               instagram: '',
               facebookHandle: ''),
-          drawer: const MyDrawer()
       );
   }
 }
