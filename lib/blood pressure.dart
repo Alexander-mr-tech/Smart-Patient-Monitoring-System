@@ -13,7 +13,16 @@ class _Blood_PressureState extends State<Blood_Pressure> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MyDrawer(),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildHeader(context),
+              buildMenuItems(context),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: const Text("Blood Pressure Screen"),
         centerTitle: true,

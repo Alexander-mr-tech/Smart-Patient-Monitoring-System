@@ -12,7 +12,16 @@ class _Patient_TempState extends State<Patient_Temp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MyDrawer(),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildHeader(context),
+              buildMenuItems(context),
+            ],
+          ),
+        ),
+      ),
       body: Container(
         color: Colors.grey,
         child: DChartGauge(
