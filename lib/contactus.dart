@@ -18,8 +18,8 @@ class Contact_Us extends StatelessWidget {
         ),
       ),
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            title: const Text("Contact Us"),
+            centerTitle: true,
           ),
           bottomNavigationBar: ContactUsBottomAppBar(
             companyName: 'Noman & Shehryar',
@@ -28,23 +28,34 @@ class Contact_Us extends StatelessWidget {
             email: 'patientmoniteringsystem@gmail.com',
             // textFont: 'Sail',
           ),
-          backgroundColor: Colors.blue,
-          body: ContactUs(
-              cardColor: Colors.white,
-              textColor: Colors.teal.shade900,
-              logo: const AssetImage('assets/images/Contactuslogo.png',),
-              email: 'monitoringsystempatient@gmail.com',
-              companyName: 'Smart Patient Monitoring System',
-              companyFontSize: 24.0,
-              companyColor: Colors.teal.shade100,
-              dividerThickness: 3,
-              phoneNumber: '+92 3165969815',
-              website: 'https://pims.gov.pk/',
-              tagLine: 'Smart Patient Monitoring System',
-              taglineColor: Colors.blue,
-              twitterHandle: '',
-              instagram: '',
-              facebookHandle: ''),
+          body: Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.deepPurpleAccent,
+                    Colors.cyan,
+                  ],
+                )),
+            child: ContactUs(
+                cardColor: Colors.white,
+                textColor: Colors.teal.shade900,
+                logo: const AssetImage('assets/images/patientfever.jpg',),
+                email: 'monitoringsystempatient@gmail.com',
+                companyName: 'Smart Patient Monitoring System',
+                companyFontSize: 24.0,
+                companyColor: Colors.teal.shade100,
+                dividerThickness: 3,
+                phoneNumber: '+92 3165969815',
+                website: 'https://pims.gov.pk/',
+                tagLine: '',
+                taglineColor: Colors.blue,
+                twitterHandle: '',
+                instagram: '',
+                facebookHandle: ''),
+          ),
       );
   }
 }

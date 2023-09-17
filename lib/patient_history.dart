@@ -10,7 +10,7 @@ class patient_history extends StatefulWidget {
 
 class _patient_historyState extends State<patient_history> {
   final fireStore = FirebaseFirestore.instance
-      .collection("My_Patients").snapshots();
+      .collection("My_Patients").orderBy("Patient_ID").snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class _patient_historyState extends State<patient_history> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Container(
-                        height: 120,
+                        height: 150,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black), // Add border
                           borderRadius: BorderRadius.circular(8.0), // Add rounded corners
@@ -66,18 +66,18 @@ class _patient_historyState extends State<patient_history> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 2,
                               blurRadius: 4,
-                              offset: Offset(0, 2), // Add shadow
+                              offset: const Offset(0, 2), // Add shadow
                             ),
                           ],
                         ),
                         child: Column(
                           children: [
-                            Text('Patient ID : '+snapshot.data!.docs[index]['Patient_ID'],style: TextStyle(fontSize: 18),),
-                            Text('Patient Name : '+snapshot.data!.docs[index]['Patient_Name']),
-                            Text("Body Temperature : " + snapshot.data!.docs[index]['Patient_Temp'],style: const TextStyle(color:Colors.red),),
-                            Text("Room Temperature : " + snapshot.data!.docs[index]['Room_Temp'],style: const TextStyle(color:Colors.greenAccent),),
-                            Text("Room Humidity : " + snapshot.data!.docs[index]['Room_Humidity'],style: const TextStyle(color:Colors.redAccent),),
-                            Text("Patients Steps : " + snapshot.data!.docs[index]['Steps_Counts'],style: const TextStyle(color:Colors.blueAccent),),
+                            Text('Patient ID : '+snapshot.data!.docs[index]['Patient_ID'],style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:Colors.blueAccent),),
+                            Text('Name : '+snapshot.data!.docs[index]['Patient_Name'],style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Body Temperature : " + snapshot.data!.docs[index]['Patient_Temp'],style: const TextStyle(color:Colors.red,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Room Temperature : " + snapshot.data!.docs[index]['Room_Temp'],style: const TextStyle(color:Colors.greenAccent,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Room Humidity : " + snapshot.data!.docs[index]['Room_Humidity'],style: const TextStyle(color:Colors.redAccent,fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Patients Steps : " + snapshot.data!.docs[index]['Steps_Counts'],style: const TextStyle(color:Colors.blueAccent,fontSize: 20,fontWeight: FontWeight.bold),),
                           ],
                         )
                       ),
