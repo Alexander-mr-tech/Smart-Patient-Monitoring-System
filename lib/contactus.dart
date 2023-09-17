@@ -1,14 +1,25 @@
 import 'package:contactus/contactus.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/Drawer/Drawer.dart';
+
 class Contact_Us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildHeader(context),
+              buildMenuItems(context),
+            ],
+          ),
+        ),
+      ),
           appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Contact Us'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
           ),
           bottomNavigationBar: ContactUsBottomAppBar(
             companyName: 'Noman & Shehryar',
@@ -23,7 +34,7 @@ class Contact_Us extends StatelessWidget {
               textColor: Colors.teal.shade900,
               logo: const AssetImage('assets/images/Contactuslogo.png',),
               email: 'monitoringsystempatient@gmail.com',
-              companyName: 'Smart Patient Monitoring',
+              companyName: 'Smart Patient Monitoring System',
               companyFontSize: 24.0,
               companyColor: Colors.teal.shade100,
               dividerThickness: 3,

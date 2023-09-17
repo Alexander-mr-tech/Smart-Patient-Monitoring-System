@@ -2,20 +2,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_patient_monitoring_system/Utils/utils.dart';
-import 'package:smart_patient_monitoring_system/sign_in_screen.dart';
+import 'package:smart_patient_monitoring_system/home_screen.dart';
+import 'package:smart_patient_monitoring_system/SignIn%20Screens/sign_up.dart';
 import 'package:smart_patient_monitoring_system/widgets/Button/rounded_button.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInScreenState extends State<SignInScreen> {
   bool loading = false;
+  bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
-  final userController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
@@ -23,20 +24,21 @@ class _SignUpState extends State<SignUp> {
   @override
   void dispose() {
     super.dispose();
-    userController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
 
-  void signup() {
+  void login() {
     setState(() {
       loading = true;
     });
     _auth
-        .createUserWithEmailAndPassword(
-            email: emailController.text.toString(),
-            password: passwordController.text.toString())
+        .signInWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text)
         .then((value) {
+      Utils().toastMessage(value.user!.email.toString());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
       setState(() {
         loading = false;
       });
@@ -114,16 +116,15 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(top: 10.0, left: 10),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Text(
-                              "Create\nYour Account",
+                              "Sign In",
                               style: TextStyle(
                                   fontFamily: 'Times New Roman',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 30,
+                                  fontSize: 36,
                                   color: Colors.black),
                             ),
                           ),
@@ -144,13 +145,17 @@ class _SignUpState extends State<SignUp> {
                                     TextFormField(
                                       keyboardType: TextInputType.emailAddress,
                                       controller: emailController,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20
+                                      ),
                                       decoration: InputDecoration(
                                           hintText: 'Enter your Email here...',
                                           hintStyle: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Times New Roman',
                                               color: Colors.black26,
-                                              fontSize: 20),
+                                              fontSize: 24),
                                           prefixIcon:
                                               const Icon(Icons.email_outlined),
                                           prefixIconColor: Colors.black,
@@ -186,8 +191,24 @@ class _SignUpState extends State<SignUp> {
                                     TextFormField(
                                       keyboardType: TextInputType.text,
                                       controller: passwordController,
-                                      obscureText: true,
+                                      obscureText: _obscureText,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20
+                                      ),
                                       decoration: InputDecoration(
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              _obscureText
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                _obscureText = !_obscureText;
+                                              });
+                                            },
+                                          ),
                                           hintText: 'Enter your Password...',
                                           hintStyle: const TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -219,36 +240,26 @@ class _SignUpState extends State<SignUp> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Center(
-                            child: RoundButton(
-                              title: 'Sign Up',
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  signup();
-                                }
-                              },
-                            ),
+                          RoundButton(
+                            loading: loading,
+                            title: 'Sign In',
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                login();
+                              }
+                            },
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Center(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const SignInScreen()));
-                              },
-                              child: const Text(
-                                "Already have an account !",
-                                style: TextStyle(
-                                    fontFamily: 'Times New Roman',
-                                    color: Colors.yellowAccent,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24),
-                              ),
-                            ),
+                          RoundButton(
+                            title: 'Sign Up',
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SignUp()));
+                            },
                           ),
                         ],
                       ),

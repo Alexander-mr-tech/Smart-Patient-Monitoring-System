@@ -2,21 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_patient_monitoring_system/Utils/utils.dart';
-import 'package:smart_patient_monitoring_system/home_screen.dart';
-import 'package:smart_patient_monitoring_system/sign_up.dart';
+import 'package:smart_patient_monitoring_system/SignIn%20Screens/sign_in_screen.dart';
 import 'package:smart_patient_monitoring_system/widgets/Button/rounded_button.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpState extends State<SignUp> {
   bool loading = false;
-  bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
+  final userController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
@@ -24,21 +23,20 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void dispose() {
     super.dispose();
+    userController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
 
-  void login() {
+  void signup() {
     setState(() {
       loading = true;
     });
     _auth
-        .signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text)
+        .createUserWithEmailAndPassword(
+            email: emailController.text.toString(),
+            password: passwordController.text.toString())
         .then((value) {
-      Utils().toastMessage(value.user!.email.toString());
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
       setState(() {
         loading = false;
       });
@@ -116,15 +114,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: EdgeInsets.only(top: 10.0, left: 10),
                             child: Text(
-                              "Sign In",
+                              "Create\nYour Account",
                               style: TextStyle(
                                   fontFamily: 'Times New Roman',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 36,
+                                  fontSize: 30,
                                   color: Colors.black),
                             ),
                           ),
@@ -145,17 +144,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                     TextFormField(
                                       keyboardType: TextInputType.emailAddress,
                                       controller: emailController,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20
-                                      ),
                                       decoration: InputDecoration(
                                           hintText: 'Enter your Email here...',
                                           hintStyle: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Times New Roman',
                                               color: Colors.black26,
-                                              fontSize: 24),
+                                              fontSize: 20),
                                           prefixIcon:
                                               const Icon(Icons.email_outlined),
                                           prefixIconColor: Colors.black,
@@ -191,24 +186,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     TextFormField(
                                       keyboardType: TextInputType.text,
                                       controller: passwordController,
-                                      obscureText: _obscureText,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20
-                                      ),
+                                      obscureText: true,
                                       decoration: InputDecoration(
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              _obscureText
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                _obscureText = !_obscureText;
-                                              });
-                                            },
-                                          ),
                                           hintText: 'Enter your Password...',
                                           hintStyle: const TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -240,26 +219,37 @@ class _SignInScreenState extends State<SignInScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          RoundButton(
-                            loading: loading,
-                            title: 'Sign In',
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                login();
-                              }
-                            },
+                          Center(
+                            child: RoundButton(
+                              title: 'Sign Up',
+                              loading: loading,
+                              onTap: () {
+                                if (_formKey.currentState!.validate()) {
+                                  signup();
+                                }
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          RoundButton(
-                            title: 'Sign Up',
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignUp()));
-                            },
+                          Center(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const SignInScreen()));
+                              },
+                              child: const Text(
+                                "Already have an account !",
+                                style: TextStyle(
+                                    fontFamily: 'Times New Roman',
+                                    color: Colors.yellowAccent,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24),
+                              ),
+                            ),
                           ),
                         ],
                       ),

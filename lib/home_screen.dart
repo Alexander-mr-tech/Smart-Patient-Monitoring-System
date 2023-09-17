@@ -12,6 +12,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home Screen"),
+        centerTitle: true,
+      ),
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
@@ -23,189 +27,255 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
+        height: double.infinity,
+        decoration: BoxDecoration(
             gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Colors.deepPurpleAccent,
-            Colors.cyan,
-          ],
-        )),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Text(
-              "Welcome to \n Smart Patient\nMonitoring System",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'Times New Roman',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.black),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 180.0,
-                          height: 180.0,
-                          decoration: BoxDecoration(
-                            color:
-                                Colors.white,
-                            border: Border.all(
-                              color: Colors.deepPurpleAccent,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/unilogo.png',
-                            height: 140,
-                            width: 175,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Patient \nTemperature",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Times New Roman',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 180.0,
-                          height: 180.0,
-                          decoration: BoxDecoration(
-                            color:
-                            Colors.white,
-                            border: Border.all(
-                              color: Colors.deepPurpleAccent,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/unilogo.png',
-                            height: 140,
-                            width: 175,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Patient's \nSteps",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Times New Roman',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 180.0,
-                          height: 180.0,
-                          decoration: BoxDecoration(
-                            color:
-                            Colors.white,
-                            border: Border.all(
-                              color: Colors.deepPurpleAccent,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/unilogo.png',
-                            height: 140,
-                            width: 175,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Room \nTemperature",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Times New Roman',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 180.0,
-                          height: 180.0,
-                          decoration: BoxDecoration(
-                            color:
-                            Colors.white,
-                            border: Border.all(
-                              color: Colors.deepPurpleAccent,
-                              width: 3.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/unilogo.png',
-                            height: 140,
-                            width: 175,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Room \nHumidity",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Times New Roman',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.white,
+                Colors.blue.shade100,
+                Colors.white,
               ],
-            )
-          ],
+            )),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Container(
+                height: 110,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red,width: 5.0)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 90,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent,width: 3.0)
+                    ),
+                    child:  Center(
+                      child: Text(
+                        "Smart Patient\nMonitoring System".toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontFamily: 'Times New Roman',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                            color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue,width: 5.0)
+                ),
+                child: Center(
+                  child: Text(
+                    "Monitoring Devices".toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontFamily: 'Times New Roman',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        color: Colors.red),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 150,
+                    width: 165,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.red,width: 5.0)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Room\nTemperature".toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.blue),
+                        ),
+                        const Divider(color: Colors.grey,thickness: 2,),
+                        const Text(
+                          "25",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    width: 165,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue,width: 5.0)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Room\nHumidity".toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.red),
+                        ),
+                        const Divider(color: Colors.grey,thickness: 2,),
+                        const Text(
+                          "65",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Colors.blue),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 150,
+                    width: 165,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue,width: 5.0)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Body\nTemperature".toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.red),
+                        ),
+                        const Divider(color: Colors.grey,thickness: 2,),
+                        const Text(
+                          "25",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Colors.blue),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 150,
+                    width: 165,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.red,width: 5.0)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Patient's\nSteps".toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.blue),
+                        ),
+                        const Divider(color: Colors.grey,thickness: 2,),
+                        const Text(
+                          "65",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: 'Times New Roman',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 120,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue,width: 5.0)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Patient's Stress Level".toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontFamily: 'Times New Roman',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                color: Colors.red),
+                          ),
+                          const Divider(color: Colors.grey,thickness: 2,),
+                          const Text(
+                            "1234 Steps",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'Times New Roman',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Colors.blue),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

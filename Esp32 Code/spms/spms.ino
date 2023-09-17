@@ -41,8 +41,8 @@ void loop() {
   int dallas_temp = sensors.getTempCByIndex(0);
   int temperatureF = sensors.getTempFByIndex(0);
   byte temperature = 0;
-byte humidity = 0;
-int err = SimpleDHTErrSuccess;
+  byte humidity = 0;
+  int err = SimpleDHTErrSuccess;
   if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess) {
     Serial.print("Read DHT11 failed, err="); Serial.print(SimpleDHTErrCode(err));
     Serial.print(","); Serial.println(SimpleDHTErrDuration(err)); delay(1000);
@@ -128,14 +128,14 @@ tft.initR(INITR_BLACKTAB);
   tft.setTextSize(1);
   tft.setTextColor(ST7735_BLUE);
   tft.setCursor(72, 100);
-  tft.println("BMP RATE");
+  tft.println("Steps");
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE);
   tft.setTextColor(ST7735_RED);
   tft.setCursor(76, 114);
-  tft.println("120");
+  tft.println("Normal");
   tft.drawRect(4, 134, 120, 25, ST7735_BLUE);
   tft.setTextSize(2);
   tft.setCursor(7, 140);
-  tft.println("ECG : ");
+  tft.println("Status : ");
 }
