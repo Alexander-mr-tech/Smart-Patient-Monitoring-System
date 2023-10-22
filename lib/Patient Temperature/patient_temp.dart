@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
+import '../Drawer/Drawer.dart';
+
 class Patient_Temp extends StatefulWidget {
   const Patient_Temp({Key? key}) : super(key: key);
 

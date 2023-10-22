@@ -1,15 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/SignIn%20Screens/sign_in_screen.dart';
-import 'package:smart_patient_monitoring_system/home_screen.dart';
-import 'package:smart_patient_monitoring_system/patient_history.dart';
-import 'package:smart_patient_monitoring_system/predication_screen.dart';
-import '../../contactus.dart';
-import '../../patient_details.dart';
+import 'package:smart_patient_monitoring_system/Home%20Screen/home_screen.dart';
+import 'package:smart_patient_monitoring_system/Patient%20History/patient_history.dart';
+import 'package:smart_patient_monitoring_system/Predication%20Screen/predication_screen.dart';
+import '../Contact Us/contactus.dart';
+import '../Email Auth/SignIn.dart';
+import '../Patient Records/patient_records.dart';
 
-class NavigationDrawer extends StatelessWidget {
+class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<NavigationDrawer> createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+
+  final auth = FirebaseAuth.instance;
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) => Drawer(
     child: SingleChildScrollView(
@@ -23,7 +34,7 @@ class NavigationDrawer extends StatelessWidget {
     ),
   );
 }
-
+@override
 Widget buildHeader(BuildContext context) => Container(
   decoration: const BoxDecoration(
       gradient: LinearGradient(
@@ -118,7 +129,7 @@ Widget buildMenuItems(BuildContext context) => Container(
                 fontWeight: FontWeight.bold),
           ),
           onTap: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const patient_details())),
+              MaterialPageRoute(builder: (context) => const PatientRecord())),
         ),
         const Divider(
           color: Colors.blue,
@@ -177,17 +188,21 @@ Widget buildMenuItems(BuildContext context) => Container(
           thickness: 2,
         ),
         ListTile(
-          leading: Icon(Icons.logout,
+          leading: const Icon(Icons.logout,
               color: Colors.white, size: 30),
-          title: Text(
+          title: const Text(
             "Logout",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold),
           ),
-          onTap: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const SignInScreen())),
+          onTap:() async{
+            await FirebaseAuth.instance.signOut();
+            Navigator.popUntil(context, (route) => route.isFirst);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const Signin()));
+          }
         ),
       ],
     ),

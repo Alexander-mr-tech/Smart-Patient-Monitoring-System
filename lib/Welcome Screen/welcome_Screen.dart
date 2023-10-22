@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/SignIn%20Screens/sign_in_screen.dart';
-import 'itemlist.dart';
+import '../Email Auth/SignIn.dart';
+import '../Item List/itemlist.dart';
 class WelcomeScreen extends StatefulWidget {
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -84,31 +84,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
-          children: <Widget>[
-            PageView.builder(
-              controller: _pageViewController,
-              itemCount: slides.length,
-              itemBuilder: (BuildContext context, int index) {
-                return slides[index];
-              },
-            ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 70.0),
-                  padding: const EdgeInsets.symmetric(vertical: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: indicator(),
-                  ),
-                )
-              //  ),
-            )
-            // )
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          PageView.builder(
+            controller: _pageViewController,
+            itemCount: slides.length,
+            itemBuilder: (BuildContext context, int index) {
+              return slides[index];
+            },
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: const EdgeInsets.only(top: 70.0),
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: indicator(),
+                ),
+              )
+            //  ),
+          )
+          // )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -122,5 +120,5 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 }
 
 void _navigateToLogin(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignInScreen()));
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Signin()));
 }

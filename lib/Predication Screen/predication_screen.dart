@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_patient_monitoring_system/widgets/Button/rounded_button.dart';
-import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
+
+import '../Drawer/Drawer.dart';
 
 class predication_screen extends StatefulWidget {
   const predication_screen({super.key});

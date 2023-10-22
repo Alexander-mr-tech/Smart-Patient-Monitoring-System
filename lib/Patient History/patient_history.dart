@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_patient_monitoring_system/widgets/Drawer/Drawer.dart';
+import '../Drawer/Drawer.dart';
+
 class patient_history extends StatefulWidget {
   const patient_history({super.key});
 
@@ -9,8 +10,6 @@ class patient_history extends StatefulWidget {
 }
 
 class _patient_historyState extends State<patient_history> {
-  final fireStore = FirebaseFirestore.instance
-      .collection("My_Patients").orderBy("Patient_ID").snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,25 +41,27 @@ class _patient_historyState extends State<patient_history> {
           child: Column(
             children: [
               StreamBuilder<QuerySnapshot>(
-                stream: fireStore,
+                stream: FirebaseFirestore.instance
+              .collection("My_Patients").snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                   if(snapshot.connectionState==ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if(snapshot.hasError) {
-                    return const Text("Error");
+                    return const Center(child: Text("Error"));
                   }
                   return Expanded(child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index){
+                        print(snapshot.data!.docs.length,);
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Container(
                         height: 150,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black), // Add border
-                          borderRadius: BorderRadius.circular(8.0), // Add rounded corners
-                          color: Colors.white, // Add background color
+                          border: Border.all(color: Colors.white), // Add border
+                          borderRadius: BorderRadius.circular(16.0), // Add rounded corners
+                          color: Colors.white.withOpacity(0.6), // Add background color
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),

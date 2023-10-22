@@ -1,3 +1,5 @@
+#include <WiFi.h>
+#include <FirebaseESP32.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <SimpleDHT.h>    
@@ -6,6 +8,12 @@
 #include <SPI.h>
 #define pinDHT11 5
 #define vibrator 18
+#define FIREBASE_HOST "smart-patient-monitoring-44c28-default-rtdb.firebaseio.com/"
+#define FIREBASE_AUTH "sxJCUtiJeU5lsT4E8PrDkrgupFsOC4AooTqzC4Ds"
+#define WIFI_SSID "A and S Fire and Safety"
+#define WIFI_PASSWORD "Arham2014"
+//Define FirebaseESP32 data object
+FirebaseData firebaseData;
 
 SimpleDHT11 dht11(pinDHT11);
 // GPIO where the DS18B20 is connected to
@@ -17,10 +25,10 @@ DallasTemperature sensors(&oneWire);
                
 //Pin for ESP32
   #define TFT_CS         13  //case select connect to pin 13
-  #define TFT_RST        23 //reset connect to pin 23
-  #define TFT_DC         22 //AO connect to pin 22  (not sure that this is really used)  try pin 25
-  #define TFT_MOSI       21 //Data = SDA connect to pin 21
-  #define TFT_SCLK       19 //Clock = SCK connect to pin 19
+  #define TFT_RST        12 //reset connect to pin 23
+  #define TFT_DC         14 //AO connect to pin 22  (not sure that this is really used)  try pin 25
+  #define TFT_MOSI       27 //Data = SDA connect to pin 21
+  #define TFT_SCLK       26 //Clock = SCK connect to pin 19
 
 // For ST7735-based displays, we will use this call
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
@@ -30,32 +38,24 @@ void setup() {
   sensors.begin();
   pinMode(pinDHT11,INPUT);
   pinMode(vibrator,OUTPUT);
+  wifi();
   tftdisplay();
- 
 }//end of void setup
 
 void loop() {
   sensors.requestTemperatures();
   int dallas_tempC = sensors.getTempCByIndex(0);
   int dallas_tempF = DallasTemperature::toFahrenheit(dallas_tempC);
-  int dallas_temp = sensors.getTempCByIndex(0);
-  int temperatureF = sensors.getTempFByIndex(0);
+  // int dallas_temp = sensors.getTempCByIndex(0);
+  // int temperatureF = sensors.getTempFByIndex(0);
   byte temperature = 0;
-  byte humidity = 0;
-  int err = SimpleDHTErrSuccess;
+byte humidity = 0;
+int err = SimpleDHTErrSuccess;
   if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess) {
     Serial.print("Read DHT11 failed, err="); Serial.print(SimpleDHTErrCode(err));
     Serial.print(","); Serial.println(SimpleDHTErrDuration(err)); delay(1000);
     return;
   }
-  Serial.println("Sample OK: ");
-  Serial.print((int)temperature); 
-  Serial.print(" *C, ");
-  Serial.println("");
-  Serial.print(int(humidity)); 
-  Serial.print(" H");
-  Serial.println("");
-
   tft.setTextSize(2);
   tft.setTextColor(ST7735_RED,ST7735_WHITE);
   tft.setCursor(22, 76);
@@ -65,18 +65,48 @@ void loop() {
   tft.setTextColor(ST7735_BLUE,ST7735_WHITE);
   tft.setCursor(83, 76);
   tft.println((int)humidity);
-
+  
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE,ST7735_WHITE);
   tft.setCursor(22, 114);
   tft.println(dallas_tempF);
-  delay(1000);
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE,ST7735_WHITE);
-  tft.setCursor(45, 140);
-  tft.println("120");
-  
+  tft.setCursor(66, 140);
+  tft.println("HIGH");
+
+  Firebase.setInt(firebaseData,"/All Parameters/Environment Temperature/Temperature",temperature);
+  if (firebaseData.dataType() == "null") {
+    Serial.println("Push failed");
+    Serial.println(firebaseData.errorReason());
+  } else {
+    Serial.println("Temperature Push Successful");
+  }
+
+  Firebase.setInt(firebaseData,"/All Parameters/Environment Temperature/Humidity",humidity);
+  if (firebaseData.dataType() == "null") {
+    Serial.println("Push failed");
+    Serial.println(firebaseData.errorReason());
+  } else {
+    Serial.println("Humidity Push Successful ");
+  }
+
+  Firebase.setInt(firebaseData,"/All Parameters/Patient's Temperature/Body Temperature",dallas_tempF);
+  if (firebaseData.dataType() == "null") {
+    Serial.println("Push failed");
+    Serial.println(firebaseData.errorReason());
+  } else {
+    Serial.println("Body Temperature Push Successful ");
+  }
+
+    Firebase.setInt(firebaseData,"/All Parameters/Patient's Steps/Steps",123);
+  if (firebaseData.dataType() == "null") {
+    Serial.println("Push failed");
+    Serial.println(firebaseData.errorReason());
+  } else {
+    Serial.println("Steps Push Successful");
+  }
 }//end of void loop
 
 void tftdisplay(){
@@ -117,8 +147,8 @@ tft.initR(INITR_BLACKTAB);
   tft.drawRect(65, 60, 59, 35, ST7735_BLUE);
   tft.setTextSize(1);
   tft.setTextColor(ST7735_RED);
-  tft.setCursor(75, 63);
-  tft.println("HUMIDTY");
+  tft.setCursor(72, 63);
+  tft.println("HUMIDITY");
   tft.drawRect(4, 97, 59, 35, ST7735_BLUE);
   tft.setTextSize(1);
   tft.setTextColor(ST7735_RED);
@@ -127,15 +157,36 @@ tft.initR(INITR_BLACKTAB);
   tft.drawRect(65, 97, 59, 35, ST7735_RED);
   tft.setTextSize(1);
   tft.setTextColor(ST7735_BLUE);
-  tft.setCursor(72, 100);
-  tft.println("Steps");
+  tft.setCursor(74, 100);
+  tft.println("T.STEPS");
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE);
   tft.setTextColor(ST7735_RED);
   tft.setCursor(76, 114);
-  tft.println("Normal");
+  tft.println("123");
   tft.drawRect(4, 134, 120, 25, ST7735_BLUE);
-  tft.setTextSize(2);
-  tft.setCursor(7, 140);
-  tft.println("Status : ");
+  tft.setTextSize(1);
+  tft.setCursor(7, 138);
+  tft.println("STRESS");
+  tft.setTextSize(1);
+  tft.setCursor(7, 148);
+  tft.println("LEVEL");
+}
+void wifi(){
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.println("Searching for Network ");
+    delay(500);
+    Serial.println("WIFI : SEARCHING");
+    delay(2000);
+  }
+  Serial.println();
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+  Serial.println("------------------------------------");
+  Serial.println("Connected...");
+  delay(3000);
 }

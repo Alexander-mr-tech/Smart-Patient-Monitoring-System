@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:smart_patient_monitoring_system/welcome_Screen.dart';
+import 'package:smart_patient_monitoring_system/Welcome%20Screen/welcome_Screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -13,12 +14,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState(){
     super.initState();
-
     Future.delayed(const Duration(seconds: 3)).then((value){
       Navigator.of(context).pushReplacement(
           CupertinoPageRoute(builder: (ctx)=> WelcomeScreen()));
     });
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:smart_patient_monitoring_system/Splash_Screen.dart';
-import 'package:smart_patient_monitoring_system/home_screen.dart';
+import 'package:smart_patient_monitoring_system/Home%20Screen/home_screen.dart';
+import 'Patient Records/patient_records.dart';
+import 'Splash Screen/Splash_Screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +16,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SPMS',
-      home:HomeScreen(),
+      home:PatientRecord(),
+      // (FirebaseAuth.instance.currentUser != null) ? const HomeScreen():const SplashScreen(),
     );
   }
 }
