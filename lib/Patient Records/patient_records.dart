@@ -409,6 +409,7 @@ class _PatientRecordState extends State<PatientRecord> {
                               ),
                               RoundButton(
                                 title: 'Store Records',
+                                loading: loading,
                                 onTap: () async {
                                   setState(() {
                                     loading = true;
