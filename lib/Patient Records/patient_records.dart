@@ -15,9 +15,11 @@ class PatientRecord extends StatefulWidget {
 
 class _PatientRecordState extends State<PatientRecord> {
   String? _selectedGender;
+  bool loading = false;
 
   final user = FirebaseAuth.instance.currentUser!;
   final _auth = FirebaseAuth.instance;
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
 
@@ -41,17 +43,19 @@ class _PatientRecordState extends State<PatientRecord> {
         height: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
           colors: [
             Colors.white,
             Colors.blue.shade100,
-            Colors.white,
+            Colors.blue.shade100,
+            Colors.lightBlueAccent,
+
           ],
         )),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal:10.0),
             child: Center(
               child: Column(
                 children: [
@@ -97,6 +101,48 @@ class _PatientRecordState extends State<PatientRecord> {
                                         color: Colors.red),
                                   ),
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                controller: nameController,
+                                style: const TextStyle(
+                                    fontSize: 30.0,
+                                    fontFamily: 'Times New Roman',
+                                    color: Colors.black),
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 14.0),
+                                    hintText: "Enter Your Name",
+                                    hintStyle: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Times New Roman',
+                                        color: Colors.black26,
+                                        fontSize: 24),
+                                    prefixIcon: const Icon(
+                                      Icons.person,
+                                      size: 30,
+                                    ),
+                                    prefixIconColor: Colors.black,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide: const BorderSide(
+                                          width: 2.0, color: Colors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10.0), // Set the border radius for focused state
+                                      borderSide: const BorderSide(
+                                          width: 4.0, color: Colors.grey),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10.0), // Set the border radius for focused state
+                                      borderSide: const BorderSide(
+                                          width: 4.0, color: Colors.blueAccent),
+                                    )),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -196,87 +242,6 @@ class _PatientRecordState extends State<PatientRecord> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              // TextFormField(
-                              //   style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
-                              //   keyboardType: TextInputType.emailAddress,
-                              //   controller: timeController,
-                              //   decoration: InputDecoration(
-                              //       hintText: 'Select Time',
-                              //       hintStyle: const TextStyle(
-                              //           fontWeight: FontWeight.bold,
-                              //           color: Colors.black26,
-                              //           fontSize: 20),
-                              //       prefixIcon:
-                              //       const Icon(Icons.timer_sharp),
-                              //       prefixIconColor: Colors.white,
-                              //       border: OutlineInputBorder(
-                              //         borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //       ),
-                              //       focusedBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(
-                              //             10.0), // Set the border radius for focused state
-                              //         borderSide: const BorderSide(
-                              //             width: 4.0, color: Colors.grey),
-                              //       ),
-                              //       enabledBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(
-                              //             10.0), // Set the border radius for focused state
-                              //         borderSide: const BorderSide(
-                              //             width: 3.0, color: Colors.white),
-                              //       )),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'Enter Time';
-                              //     }
-                              //     return null;
-                              //   },
-                              //   readOnly: true,
-                              //   onTap: () => _selectTime(context),
-                              // ),
-                              // SizedBox(height: 10,),
-                              // TextFormField(
-                              //   style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
-                              //   keyboardType: TextInputType.text,
-                              //   controller: dateController,
-                              //   decoration: InputDecoration(
-                              //       hintText: 'Select the Date',
-                              //       hintStyle: const TextStyle(
-                              //           fontWeight: FontWeight.bold,
-                              //           fontFamily: 'Times New Roman',
-                              //           color: Colors.black26,
-                              //           fontSize: 18),
-                              //       prefixIcon:
-                              //       const Icon(Icons.date_range_outlined),
-                              //       prefixIconColor: Colors.white,
-                              //       border: OutlineInputBorder(
-                              //         borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //         borderSide: const BorderSide(
-                              //             width: 2.0, color: Colors.black),
-                              //       ),
-                              //       focusedBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(
-                              //             10.0), // Set the border radius for focused state
-                              //         borderSide: const BorderSide(
-                              //             width: 4.0, color: Colors.grey),
-                              //       ),
-                              //       enabledBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(
-                              //             10.0), // Set the border radius for focused state
-                              //         borderSide: const BorderSide(
-                              //             width: 3.0, color: Colors.white),
-                              //       )),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'Please Enter Date';
-                              //     }
-                              //     return null;
-                              //   },
-                              //   readOnly: true,
-                              //   onTap:() => _selectDate(context),
-                              // ),
-                              // SizedBox(height: 10,),
                               Container(
                                 padding: const EdgeInsets.all(14),
                                 height: 60,
@@ -440,11 +405,14 @@ class _PatientRecordState extends State<PatientRecord> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               RoundButton(
                                 title: 'Store Records',
                                 onTap: () async {
+                                  setState(() {
+                                    loading = true;
+                                  });
                                   String StringAge = ageController.text.trim();
                                   int Age = int.parse(StringAge);
                                   String Gender = _selectedGender.toString();
@@ -454,17 +422,11 @@ class _PatientRecordState extends State<PatientRecord> {
                                   String Steps = steps;
                                   String Stress = stress;
                                   final User? user = _auth.currentUser;
+                                  FirebaseFirestore firestore = FirebaseFirestore.instance;
                                   if (user != null) {
-                                    FirebaseFirestore firestore =
-                                        FirebaseFirestore.instance;
-                                    DocumentReference<Map<String, dynamic>>
-                                        reference = firestore
-                                            .collection("Patients Records")
-                                            .doc(user.uid);
-                                    CollectionReference historicalItems =
-                                        firestore
-                                            .collection('Patients History');
-                                    Map<String, dynamic> currentData = {
+                                    final userUID = user.uid;
+                                    final userDocRef = firestore.collection('Patients Records').doc(userUID);
+                                    final currentData = {
                                       'Age': Age,
                                       'Body_Temperature': BodyTemperature,
                                       'Gender': Gender,
@@ -474,34 +436,30 @@ class _PatientRecordState extends State<PatientRecord> {
                                       'Stress': Stress,
                                       'Timestamp': FieldValue.serverTimestamp(),
                                     };
-
-                                    reference.update(currentData).then((_) {
-                                      print(
-                                          'Document data (Current Data) added successfully');
-
-                                      // Create a historical record with a timestamp
-                                      Map<String, dynamic> historicalData = {
-                                        'data': currentData,
-                                      };
-                                      historicalItems.add(historicalData).then(
-                                          (DocumentReference
-                                              historicalDocument) {
-                                        print(
-                                            'Document ID (Historical Data): ${historicalDocument.id}');
-                                      }).catchError((error) {
-                                        print(
-                                            'Error adding historical document: $error');
-                                      });
-                                    }).catchError((error) {
-                                      print(
-                                          'Error adding current document: $error');
-                                    });
-
+                                    await userDocRef.set(currentData);
+                                    final historicalDataCollectionRef = firestore.collection('Patient History').doc(userUID).collection('Records');
+                                    final historicalData = {
+                                      'Age': Age,
+                                      'Body_Temperature': BodyTemperature,
+                                      'Gender': Gender,
+                                      'Room_Temperature': RoomTemperature,
+                                      'Room_humidity': Roomhumidity,
+                                      'Steps': Steps,
+                                      'Stress': Stress,
+                                      'Timestamp': FieldValue.serverTimestamp(),
+                                    };
+                                    await historicalDataCollectionRef.add(historicalData);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Center(child: Text('Data saved successfully!'))),
+                                    );
+                                    nameController.clear();
                                     ageController.clear();
                                     genderController.clear();
-                                  } else {
-                                    print('User is not authenticated.');
                                   }
+                                  setState(() {
+                                    loading = false;
+                                  });
+
                                 },
                               )
                             ],

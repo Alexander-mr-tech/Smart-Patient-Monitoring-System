@@ -51,7 +51,7 @@ class _SignupState extends State<Signup> {
 
   Future<void> addUserDetails(userId,username,email) async {
     try {
-      await FirebaseFirestore.instance.collection('Patients Records').doc(userId).set({
+      await FirebaseFirestore.instance.collection('Patients Emails').doc(userId).set({
         'Name': username,
         'Email': email,
         'Uid': userId,
