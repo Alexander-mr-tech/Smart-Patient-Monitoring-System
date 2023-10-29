@@ -1,4 +1,7 @@
 #include <WiFi.h>
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_ADXL345_U.h>
 #include <FirebaseESP32.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -22,6 +25,11 @@ const int oneWireBus = 15;
 OneWire oneWire(oneWireBus);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
+
+int steps = 0;
+int lastX = 0;
+int lastY = 0;
+int lastZ = 0;
                
 //Pin for ESP32
   #define TFT_CS         13  //case select connect to pin 13
@@ -30,12 +38,18 @@ DallasTemperature sensors(&oneWire);
   #define TFT_MOSI       27 //Data = SDA connect to pin 21
   #define TFT_SCLK       26 //Clock = SCK connect to pin 19
 
+Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345); // 0x53 is the default I2C address
 // For ST7735-based displays, we will use this call
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 void setup() {
   Serial.begin(115200);
   sensors.begin();
+  if(!accel.begin()) {
+    Serial.println("Could not find a valid ADXL345 sensor, check wiring!");
+    while (1);
+  }
+  accel.setRange(ADXL345_RANGE_16_G);
   pinMode(pinDHT11,INPUT);
   pinMode(vibrator,OUTPUT);
   wifi();
@@ -56,6 +70,22 @@ int err = SimpleDHTErrSuccess;
     Serial.print(","); Serial.println(SimpleDHTErrDuration(err)); delay(1000);
     return;
   }
+
+sensors_event_t event;
+  accel.getEvent(&event);
+  double x = event.acceleration.x;
+  double y = event.acceleration.y;
+  double z = event.acceleration.z;
+  if ((y > 0.01 && lastY < 0)|| (y < -0 && lastY > 0)||(x > 0 && lastX < 0)||(x < -1 && lastX > 0)||(z > 10 && lastX < 0)||(z < 12 && lastX > 0)) {
+    steps++;
+    Serial.print("Step Count: ");
+    Serial.println(steps);
+  }
+  lastX = x;
+  lastY = y;
+  lastZ = z;
+  delay(500);
+
   tft.setTextSize(2);
   tft.setTextColor(ST7735_RED,ST7735_WHITE);
   tft.setCursor(22, 76);
@@ -72,16 +102,23 @@ int err = SimpleDHTErrSuccess;
   tft.println(dallas_tempF);
 
   tft.setTextSize(2);
+  tft.setTextColor(ST7735_RED,ST7735_WHITE);
+  tft.setCursor(83, 114);
+  tft.println(steps);
+
+  tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE,ST7735_WHITE);
   tft.setCursor(66, 140);
   tft.println("HIGH");
+
+  delay(1000);
 
   Firebase.setInt(firebaseData,"/All Parameters/Environment Temperature/Temperature",temperature);
   if (firebaseData.dataType() == "null") {
     Serial.println("Push failed");
     Serial.println(firebaseData.errorReason());
   } else {
-    Serial.println("Temperature Push Successful");
+    // Serial.println("Temperature Push Successful");
   }
 
   Firebase.setInt(firebaseData,"/All Parameters/Environment Temperature/Humidity",humidity);
@@ -89,7 +126,7 @@ int err = SimpleDHTErrSuccess;
     Serial.println("Push failed");
     Serial.println(firebaseData.errorReason());
   } else {
-    Serial.println("Humidity Push Successful ");
+    // Serial.println("Humidity Push Successful ");
   }
 
   Firebase.setInt(firebaseData,"/All Parameters/Patient's Temperature/Body Temperature",dallas_tempF);
@@ -97,20 +134,19 @@ int err = SimpleDHTErrSuccess;
     Serial.println("Push failed");
     Serial.println(firebaseData.errorReason());
   } else {
-    Serial.println("Body Temperature Push Successful ");
+    // Serial.println("Body Temperature Push Successful ");
   }
 
-    Firebase.setInt(firebaseData,"/All Parameters/Patient's Steps/Steps",123);
+    Firebase.setInt(firebaseData,"/All Parameters/Patient's Steps/Steps",steps);
   if (firebaseData.dataType() == "null") {
     Serial.println("Push failed");
     Serial.println(firebaseData.errorReason());
   } else {
-    Serial.println("Steps Push Successful");
+    // Serial.println("Steps Push Successful");
   }
 }//end of void loop
 
 void tftdisplay(){
-
 tft.fillScreen(ST77XX_BLACK);   
 tft.setRotation(1);
   // Use this initializer if using a 1.8" TFT screen:
@@ -159,11 +195,6 @@ tft.initR(INITR_BLACKTAB);
   tft.setTextColor(ST7735_BLUE);
   tft.setCursor(74, 100);
   tft.println("T.STEPS");
-  tft.setTextSize(2);
-  tft.setTextColor(ST7735_BLUE);
-  tft.setTextColor(ST7735_RED);
-  tft.setCursor(76, 114);
-  tft.println("123");
   tft.drawRect(4, 134, 120, 25, ST7735_BLUE);
   tft.setTextSize(1);
   tft.setCursor(7, 138);
@@ -177,9 +208,9 @@ void wifi(){
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED) {
     Serial.println("Searching for Network ");
-    delay(500);
+    delay(100);
     Serial.println("WIFI : SEARCHING");
-    delay(2000);
+    delay(500);
   }
   Serial.println();
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
@@ -188,5 +219,5 @@ void wifi(){
   Serial.println();
   Serial.println("------------------------------------");
   Serial.println("Connected...");
-  delay(3000);
+  delay(500);
 }

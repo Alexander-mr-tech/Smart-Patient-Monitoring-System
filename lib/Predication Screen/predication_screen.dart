@@ -43,14 +43,7 @@ class _predication_screenState extends State<predication_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            buildHeader(context),
-            buildMenuItems(context),
-          ],
-        ),
-      ),
+      drawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text("Predication"),
         centerTitle: true,

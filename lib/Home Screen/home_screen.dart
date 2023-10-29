@@ -23,23 +23,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text('${user.email!.toString()}'),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenuItems(context),
-            ],
-          ),
-        ),
-      ),
+      drawer: const MyDrawer(),
       body: Container(
-        height: double.infinity,
+        height: screenHeight*1,
         decoration: BoxDecoration(
             gradient: LinearGradient(
           begin: Alignment.topRight,
@@ -69,11 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               List.from(map.values, growable: true);
                           list.clear();
                           list = map.values.toList();
-                          // print("value is "+list[2]['Steps'].toString());
                           return Column(
                             children: [
                               Container(
-                                height: 110,
+                                height: screenHeight*0.12,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     border: Border.all(
@@ -81,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
-                                    height: 90,
+                                    height: screenHeight*0.09,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                         border: Border.all(
@@ -95,19 +87,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                         style: const TextStyle(
                                             fontFamily: 'Times New Roman',
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 28,
+                                            fontSize: 22,
                                             color: Colors.red),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: screenHeight *0.015,
                               ),
                               Container(
-                                height: 50,
-                                width: double.infinity,
+                                height: screenHeight * 0.08,
+                                width: screenWidth * 1,
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.blue, width: 5.0)),
@@ -123,16 +115,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: screenHeight *0.02,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    height: 150,
-                                    width: 165,
+                                    height: screenHeight * 0.20,
+                                    width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.red, width: 5.0)),
@@ -154,20 +146,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                           thickness: 2,
                                         ),
                                         Text(
-                                          list[0]['Temperature'].toString(),
+                                          "${list[0]['Temperature']}° C",
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontFamily: 'Times New Roman',
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 30,
+                                              fontSize: 40,
                                               color: Colors.red),
                                         ),
                                       ],
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: screenWidth * 0.02,
+                                  ),
                                   Container(
-                                    height: 150,
-                                    width: 165,
+                                    height: screenHeight * 0.20,
+                                    width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.blue, width: 5.0)),
@@ -189,12 +184,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           thickness: 2,
                                         ),
                                         Text(
-                                          list[0]['Humidity'].toString(),
+                                          "${list[0]['Humidity']} %",
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontFamily: 'Times New Roman',
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 30,
+                                              fontSize: 40,
                                               color: Colors.blue),
                                         ),
                                       ],
@@ -202,16 +197,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: screenHeight*0.02,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    height: 150,
-                                    width: 165,
+                                    height: screenHeight * 0.20,
+                                    width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.blue, width: 5.0)),
@@ -233,21 +228,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                           thickness: 2,
                                         ),
                                         Text(
-                                          list[1]['Body Temperature']
-                                              .toString(),
+                                          "${list[1]['Body Temperature']}° F",
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontFamily: 'Times New Roman',
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 30,
+                                              fontSize: 40,
                                               color: Colors.blue),
                                         ),
                                       ],
                                     ),
                                   ),
+                                  SizedBox(width: screenWidth * 0.02,),
                                   Container(
-                                    height: 150,
-                                    width: 165,
+                                    height: screenHeight * 0.20,
+                                    width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.red, width: 5.0)),
@@ -269,12 +264,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           thickness: 2,
                                         ),
                                         Text(
-                                          list[2]['Steps'].toString(),
+                                          list[3]['Steps'].toString(),
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontFamily: 'Times New Roman',
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 30,
+                                              fontSize: 40,
                                               color: Colors.red),
                                         ),
                                       ],
@@ -282,14 +277,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: screenHeight *0.02,
                               ),
                               Column(
                                 children: [
                                   Container(
-                                    height: 120,
-                                    width: double.infinity,
+                                    height: screenHeight * 0.18,
+                                    width: screenWidth * 1,
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.blue, width: 5.0)),
@@ -306,17 +301,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: const TextStyle(
                                                 fontFamily: 'Times New Roman',
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 24,
+                                                fontSize: 26,
                                                 color: Colors.red),
                                           ),
                                           const Divider(
                                             color: Colors.grey,
                                             thickness: 2,
                                           ),
-                                          const Text(
-                                            "12548",
+                                          Text(
+                                            list[2]['Stress'].toString(),
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontFamily: 'Times New Roman',
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 30,
@@ -330,14 +325,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           );
-                          //   Column(
-                          //   children: [
-                          //     Text(list[0]['Room Humidity'].toString()),
-                          //     Text(list[0]['Room Temperature'].toString()),
-                          //     Text(list[1]['Steps Counts'].toString()),
-                          //     Text(list[2]['Body Temperature'].toString()),
-                          //   ],
-                          // );
                         }
                       })),
             ],

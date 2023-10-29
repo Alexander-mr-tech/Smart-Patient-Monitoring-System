@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SPMS',
-      home:PatientRecord(),
-      // (FirebaseAuth.instance.currentUser != null) ? const HomeScreen():const SplashScreen(),
+      // home:PatientRecord(),
+      home :(FirebaseAuth.instance.currentUser != null) ? const HomeScreen():const SplashScreen(),
     );
   }
 }

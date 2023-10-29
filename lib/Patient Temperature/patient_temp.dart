@@ -17,14 +17,7 @@ class _Patient_TempState extends State<Patient_Temp> {
           title: const Text("Patient Temperature"),
           centerTitle: true,
         ),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenuItems(context),
-            ],
-          ),
-        ),
+        drawer: const MyDrawer(),
         body: Container(
           // width: double.infinity,
           decoration: const BoxDecoration(

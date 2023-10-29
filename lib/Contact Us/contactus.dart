@@ -8,16 +8,7 @@ class Contact_Us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenuItems(context),
-            ],
-          ),
-        ),
-      ),
+      drawer: const MyDrawer(),
           appBar: AppBar(
             title: const Text("Contact Us"),
             centerTitle: true,

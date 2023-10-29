@@ -17,14 +17,7 @@ class _patient_historyState extends State<patient_history> {
         title: const Text("Patient History"),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            buildHeader(context),
-            buildMenuItems(context),
-          ],
-        ),
-      ),
+      drawer: const MyDrawer(),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -42,10 +35,14 @@ class _patient_historyState extends State<patient_history> {
             children: [
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-              .collection("My_Patients").snapshots(),
+              .collection("Patients Records").snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                   if(snapshot.connectionState==ConnectionState.waiting) {
+                    print("connection sucssess");
                     return const Center(child: CircularProgressIndicator());
+                  }
+                  if(snapshot.hasData) {
+                    print(snapshot.data!.docs);
                   }
                   if(snapshot.hasError) {
                     return const Center(child: Text("Error"));
@@ -55,33 +52,32 @@ class _patient_historyState extends State<patient_history> {
                       itemBuilder: (context, index){
                         print(snapshot.data!.docs.length,);
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white), // Add border
-                          borderRadius: BorderRadius.circular(16.0), // Add rounded corners
-                          color: Colors.white.withOpacity(0.6), // Add background color
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2), // Add shadow
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Text('Patient ID : '+snapshot.data!.docs[index]['Patient_ID'],style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color:Colors.blueAccent),),
-                            Text('Name : '+snapshot.data!.docs[index]['Patient_Name'],style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                            Text("Body Temperature : " + snapshot.data!.docs[index]['Patient_Temp'],style: const TextStyle(color:Colors.red,fontSize: 20,fontWeight: FontWeight.bold),),
-                            Text("Room Temperature : " + snapshot.data!.docs[index]['Room_Temp'],style: const TextStyle(color:Colors.greenAccent,fontSize: 20,fontWeight: FontWeight.bold),),
-                            Text("Room Humidity : " + snapshot.data!.docs[index]['Room_Humidity'],style: const TextStyle(color:Colors.redAccent,fontSize: 20,fontWeight: FontWeight.bold),),
-                            Text("Patients Steps : " + snapshot.data!.docs[index]['Steps_Counts'],style: const TextStyle(color:Colors.blueAccent,fontSize: 20,fontWeight: FontWeight.bold),),
-                          ],
-                        )
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      // child: Container(
+                      //   height: 150,
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: Colors.white), // Add border
+                      //     borderRadius: BorderRadius.circular(16.0), // Add rounded corners
+                      //     color: Colors.white.withOpacity(0.6), // Add background color
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Colors.grey.withOpacity(0.5),
+                      //         spreadRadius: 2,
+                      //         blurRadius: 4,
+                      //         offset: const Offset(0, 2), // Add shadow
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   child: Column(
+                      //     children: [
+                      //       Text('Name : '+snapshot.data!.docs[index]['Name'],style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      //       Text("Body Temperature : " + snapshot.data!.docs[index]['Body_Temperature'],style: const TextStyle(color:Colors.red,fontSize: 20,fontWeight: FontWeight.bold),),
+                      //       Text("Room Temperature : " + snapshot.data!.docs[index]['Room_Temperature'],style: const TextStyle(color:Colors.greenAccent,fontSize: 20,fontWeight: FontWeight.bold),),
+                      //       Text("Room Humidity : " + snapshot.data!.docs[index]['Room_Humidity'],style: const TextStyle(color:Colors.redAccent,fontSize: 20,fontWeight: FontWeight.bold),),
+                      //       Text("Patients Steps : " + snapshot.data!.docs[index]['Steps'],style: const TextStyle(color:Colors.blueAccent,fontSize: 20,fontWeight: FontWeight.bold),),
+                      //     ],
+                      //   )
+                      // ),
                     );
                   }),
                   );

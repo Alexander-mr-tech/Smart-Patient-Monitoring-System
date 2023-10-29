@@ -7,35 +7,35 @@ import '../Contact Us/contactus.dart';
 import '../Email Auth/SignIn.dart';
 import '../Patient Records/patient_records.dart';
 
-class NavigationDrawer extends StatefulWidget {
-  const NavigationDrawer({
+class MyDrawer extends StatefulWidget {
+  const MyDrawer({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<NavigationDrawer> createState() => _NavigationDrawerState();
+  State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer> {
-
-  final auth = FirebaseAuth.instance;
-  final user = FirebaseAuth.instance.currentUser!;
-
+class _MyDrawerState extends State<MyDrawer> {
   @override
-  Widget build(BuildContext context) => Drawer(
-    child: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          buildHeader(context),
-          buildMenuItems(context),
-        ],
+  Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    String userEmail = user.email.toString(); // Initialize userEmail here
+    return Drawer(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            buildHeader(context, userEmail), // Pass userEmail to the buildHeader method
+            buildMenuItems(context),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 @override
-Widget buildHeader(BuildContext context) => Container(
+Widget buildHeader(BuildContext context, String userEmail) => Container(
   decoration: const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topLeft,
@@ -50,9 +50,9 @@ Widget buildHeader(BuildContext context) => Container(
     top: 10 + MediaQuery.of(context).padding.top,
     bottom: 10 + MediaQuery.of(context).padding.bottom,
   ),
-  child: const Column(
+  child: Column(
     children: [
-      CircleAvatar(
+      const CircleAvatar(
         radius: 70,
         backgroundColor: Colors.blue,
         child: CircleAvatar(
@@ -61,19 +61,19 @@ Widget buildHeader(BuildContext context) => Container(
           backgroundImage: AssetImage('assets/images/Profile Image.png'),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         height: 12,
       ),
-      Text(
+      const Text(
         "S P M S",
         style: TextStyle(fontSize: 28, color: Colors.white),
       ),
-      SizedBox(
+      const SizedBox(
         height: 4,
       ),
       Text(
-        "monitoringsystempatient@gmaill.com",textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 16, color: Colors.white),
+          userEmail.toString(),textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 16, color: Colors.white),
       ),
     ],
   ),
@@ -122,7 +122,7 @@ Widget buildMenuItems(BuildContext context) => Container(
             size: 30,
           ),
           title: const Text(
-            "Patient's Details",
+            "Patient's Records",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

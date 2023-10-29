@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import '../Drawer/Drawer.dart';
+import '../widgets/Button/rounded_button.dart';
 
 class PatientRecord extends StatefulWidget {
   const PatientRecord({Key? key}) : super(key: key);
@@ -16,72 +18,67 @@ class _PatientRecordState extends State<PatientRecord> {
   String? _selectedGender;
 
   final user = FirebaseAuth.instance.currentUser!;
-  final auth = FirebaseAuth.instance;
-  final TextEditingController nameController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
   final TextEditingController ageController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
-  final TextEditingController bodyController = TextEditingController();
-  final TextEditingController roomTempController = TextEditingController();
-  final TextEditingController roomhumController = TextEditingController();
-  final TextEditingController stepsController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
   final DatabaseReference ref = FirebaseDatabase.instance.ref("All Parameters");
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
-  void upload()async{
-
-    String Name = nameController.text.trim();
-    String StringAge = ageController.text.trim();
-    int Age = int.parse(StringAge);
-    String Gender = _selectedGender.toString();
-    String BodyTemperature = bodyController.text.toString();
-    String RoomTemperature = roomTempController.text.toString();
-    String Roomhumidity = roomTempController.text.toString();
-    String Steps = stepsController.text.toString();
-    // String Stress= stressController.toString();
-    print("Selected gender is : " + Gender);
-    DocumentReference reference = await FirebaseFirestore.instance.collection("Patients Records").doc(Name);
-    reference.set(
-        {
-          'Name':Name,
-          'Age':Age,
-          'Gender':Gender,
-          'BodyTemperature':BodyTemperature,
-          'RoomTemperature':RoomTemperature,
-          'Roomhumidity':Roomhumidity,
-          'Steps':Steps,
-          'Stress':"High",
-        }
-    );
-    nameController.clear();
-    ageController.clear();
-    bodyController.clear();
-    roomTempController.clear();
-    roomhumController.clear();
-    stepsController.clear();
-  }
   @override
   Widget build(BuildContext context) {
+
+    DateTime _selectedDate = DateTime.now();
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (picked != null && picked != _selectedDate) {
+        setState(() {
+          _selectedDate = picked;
+          dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
+          print(dateController.text.toString());
+        });
+      }
+    }
+
+    DateTime _selectedTime = DateTime.now();
+    Future<void> _selectTime(BuildContext context) async {
+      final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(_selectedTime),
+      );
+      if (picked != null) {
+        setState(() {
+          _selectedTime = DateTime(
+            _selectedTime.year,
+            _selectedTime.month,
+            _selectedTime.day,
+            picked.hour,
+            picked.minute,
+          );
+          timeController.text = DateFormat.jm().format(_selectedTime);
+          print(timeController.text.toString());
+        });
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Records Save"),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildHeader(context),
-              buildMenuItems(context),
-            ],
-          ),
-        ),
-      ),
+      drawer: const MyDrawer(),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
@@ -110,17 +107,15 @@ class _PatientRecordState extends State<PatientRecord> {
                               snapshot.data!.snapshot.value as dynamic;
                           List<dynamic> list =
                               List.from(map.values, growable: true);
-                          list.clear();
-                          list = map.values.toList();
+                          // print(list);
+                          // list.clear();
                           print(list);
+                          list = map.values.toList();
                           var roomtemp= list[0]['Temperature'].toString();
                           var roomhum= list[0]['Humidity'].toString();
                           var bodytemp= list[1]['Body Temperature'].toString();
-                          var steps= list[2]['Steps'].toString();
-                          print("Room temp " + roomtemp);
-                          print("Room Humidity " + roomhum);
-                          print("Body  temp " + bodytemp);
-                          print("steps " + steps);
+                          var stress= list[2]['Stress'].toString();
+                          var steps= list[3]['Steps'].toString();
                           return Column(
                             children: [
                               const SizedBox(
@@ -189,52 +184,133 @@ class _PatientRecordState extends State<PatientRecord> {
                                     border: Border.all(
                                         color: Colors.blueAccent, width: 4),
                                     borderRadius: BorderRadius.circular(08)),
-                                child: DropdownButtonFormField<String>(
-                                  alignment: Alignment.center,
-                                  dropdownColor: Colors.blueAccent,
-                                  iconSize: 36,
-                                  style: const TextStyle(
-                                      fontSize: 24.0,
-                                      fontFamily: 'Times New Roman',
-                                      color: Colors.white),
-                                  value: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value;
-                                    });
-                                  },
-                                  items: ['Male', 'Female']
-                                      .map<DropdownMenuItem<String>>(
-                                        (String value) =>
-                                            DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Center(child: Text(value)),
-                                        ),
-                                      )
-                                      .toList(),
-                                  decoration: const InputDecoration(
-                                    labelStyle: TextStyle(
-                                        fontSize: 24.0,
-                                        fontFamily: 'Times New Roman',
-                                        color: Colors.white),
-                                    hintText: 'Select your gender',
-                                    hintStyle: TextStyle(
-                                        fontSize: 24.0,
-                                        fontFamily: 'Times New Roman',
-                                        color: Colors.grey),
-                                    prefixIcon: Icon(Icons.person),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButtonFormField<String>(
+                                    alignment: Alignment.center,
+                                    dropdownColor: Colors.blueAccent,
+                                    iconSize: 36,
+
+                                    style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),
+                                    value: _selectedGender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedGender = value;
+                                      });
+                                    },
+                                    items: ['Male', 'Female']
+                                        .map<DropdownMenuItem<String>>(
+                                          (String value) =>
+                                              DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Center(child: Text(value)),
+                                          ),
+                                        )
+                                        .toList(),
+                                    decoration: const InputDecoration(
+                                      labelStyle: TextStyle(
+                                          fontSize: 24.0,
+                                          fontFamily: 'Times New Roman',
+                                          color: Colors.black),
+                                      hintText: 'Select your gender',
+                                      hintStyle: TextStyle(
+                                          fontSize: 24.0,
+                                          fontFamily: 'Times New Roman',
+                                          color: Colors.grey),
+                                      prefixIcon: Icon(Icons.person,size: 30,),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please select your gender';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select your gender';
-                                    }
-                                    return null;
-                                  },
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              // TextFormField(
+                              //   style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+                              //   keyboardType: TextInputType.emailAddress,
+                              //   controller: timeController,
+                              //   decoration: InputDecoration(
+                              //       hintText: 'Select Time',
+                              //       hintStyle: const TextStyle(
+                              //           fontWeight: FontWeight.bold,
+                              //           color: Colors.black26,
+                              //           fontSize: 20),
+                              //       prefixIcon:
+                              //       const Icon(Icons.timer_sharp,size: 30,color: Colors.black,),
+                              //       prefixIconColor: Colors.white,
+                              //       border: OutlineInputBorder(
+                              //         borderRadius:
+                              //         BorderRadius.circular(10.0),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             10.0), // Set the border radius for focused state
+                              //         borderSide: const BorderSide(
+                              //             width: 4.0, color: Colors.grey),
+                              //       ),
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             10.0), // Set the border radius for focused state
+                              //         borderSide: const BorderSide(
+                              //             width: 3.0, color: Colors.white),
+                              //       )),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'Enter Time';
+                              //     }
+                              //     return null;
+                              //   },
+                              //   readOnly: true,
+                              //   onTap: () => _selectTime(context),
+                              // ),
+                              // SizedBox(height: 10,),
+                              // TextFormField(
+                              //   style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+                              //   keyboardType: TextInputType.text,
+                              //   controller: dateController,
+                              //   decoration: InputDecoration(
+                              //       hintText: 'Select the Date',
+                              //       hintStyle: const TextStyle(
+                              //           fontWeight: FontWeight.bold,
+                              //           fontFamily: 'Times New Roman',
+                              //           color: Colors.black26,
+                              //           fontSize: 18),
+                              //       prefixIcon:
+                              //       const Icon(Icons.date_range_outlined,size: 30,color: Colors.black,),
+                              //       prefixIconColor: Colors.white,
+                              //       border: OutlineInputBorder(
+                              //         borderRadius:
+                              //         BorderRadius.circular(10.0),
+                              //         borderSide: const BorderSide(
+                              //             width: 2.0, color: Colors.black),
+                              //       ),
+                              //       focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             10.0), // Set the border radius for focused state
+                              //         borderSide: const BorderSide(
+                              //             width: 4.0, color: Colors.grey),
+                              //       ),
+                              //       enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(
+                              //             10.0), // Set the border radius for focused state
+                              //         borderSide: const BorderSide(
+                              //             width: 3.0, color: Colors.white),
+                              //       )),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'Please Enter Date';
+                              //     }
+                              //     return null;
+                              //   },
+                              //   readOnly: true,
+                              //   onTap:() => _selectDate(context),
+                              // ),
+                              SizedBox(height: 10,),
                               Container(
                                 padding: const EdgeInsets.all(14),
                                 height:60,
@@ -336,17 +412,20 @@ class _PatientRecordState extends State<PatientRecord> {
                                     width: 4.0,
                                   ),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Icon(Icons.stream,size: 30,),
                                     SizedBox(width: 10,),
-                                    Text("Stress Level = HIGH",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    Text("Stress Level = $stress",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 10,),
-                              TextButton(onPressed:  (){}, child: const Text("Upload",style: TextStyle(fontSize: 24),),)
+                              const SizedBox(height: 20,),
+                              RoundButton(
+                                title: 'Store Records',
+                                onTap: (){}
+                              ),
                             ],
                           );
                         }
