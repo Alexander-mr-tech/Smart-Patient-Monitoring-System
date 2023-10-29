@@ -14,65 +14,23 @@ class PatientRecord extends StatefulWidget {
 }
 
 class _PatientRecordState extends State<PatientRecord> {
-
   String? _selectedGender;
 
   final user = FirebaseAuth.instance.currentUser!;
   final _auth = FirebaseAuth.instance;
   final TextEditingController ageController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
 
   final DatabaseReference ref = FirebaseDatabase.instance.ref("All Parameters");
-
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-    DateTime _selectedDate = DateTime.now();
-    Future<void> _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _selectedDate,
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2101),
-      );
-      if (picked != null && picked != _selectedDate) {
-        setState(() {
-          _selectedDate = picked;
-          dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
-          print(dateController.text.toString());
-        });
-      }
-    }
-
-    DateTime _selectedTime = DateTime.now();
-    Future<void> _selectTime(BuildContext context) async {
-      final TimeOfDay? picked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(_selectedTime),
-      );
-      if (picked != null) {
-        setState(() {
-          _selectedTime = DateTime(
-            _selectedTime.year,
-            _selectedTime.month,
-            _selectedTime.day,
-            picked.hour,
-            picked.minute,
-          );
-          timeController.text = DateFormat.jm().format(_selectedTime);
-          print(timeController.text.toString());
-        });
-      }
-    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Records Save"),
@@ -99,9 +57,11 @@ class _PatientRecordState extends State<PatientRecord> {
                 children: [
                   StreamBuilder(
                       stream: ref.onValue,
-                      builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                      builder:
+                          (context, AsyncSnapshot<DatabaseEvent> snapshot) {
                         if (!snapshot.hasData) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else {
                           Map<dynamic, dynamic> map =
                               snapshot.data!.snapshot.value as dynamic;
@@ -111,11 +71,11 @@ class _PatientRecordState extends State<PatientRecord> {
                           // list.clear();
                           print(list);
                           list = map.values.toList();
-                          var roomtemp= list[0]['Temperature'].toString();
-                          var roomhum= list[0]['Humidity'].toString();
-                          var bodytemp= list[1]['Body Temperature'].toString();
-                          var stress= list[2]['Stress'].toString();
-                          var steps= list[3]['Steps'].toString();
+                          var roomtemp = list[0]['Temperature'].toString();
+                          var roomhum = list[0]['Humidity'].toString();
+                          var bodytemp = list[1]['Body Temperature'].toString();
+                          var stress = list[2]['Stress'].toString();
+                          var steps = list[3]['Steps'].toString();
                           return Column(
                             children: [
                               const SizedBox(
@@ -142,21 +102,25 @@ class _PatientRecordState extends State<PatientRecord> {
                                 height: 10,
                               ),
                               TextFormField(
-                                controller :ageController,
+                                controller: ageController,
                                 style: const TextStyle(
                                     fontSize: 30.0,
                                     fontFamily: 'Times New Roman',
                                     color: Colors.black),
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 14.0),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 14.0),
                                     hintText: "Age",
                                     hintStyle: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Times New Roman',
                                         color: Colors.black26,
                                         fontSize: 24),
-                                    prefixIcon: const Icon(Icons.date_range,size: 30,),
+                                    prefixIcon: const Icon(
+                                      Icons.date_range,
+                                      size: 30,
+                                    ),
                                     prefixIconColor: Colors.black,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
@@ -189,8 +153,10 @@ class _PatientRecordState extends State<PatientRecord> {
                                     alignment: Alignment.center,
                                     dropdownColor: Colors.blueAccent,
                                     iconSize: 36,
-
-                                    style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),
+                                    style: const TextStyle(
+                                        fontSize: 24.0,
+                                        fontFamily: 'Times New Roman',
+                                        color: Colors.white),
                                     value: _selectedGender,
                                     onChanged: (value) {
                                       setState(() {
@@ -210,13 +176,13 @@ class _PatientRecordState extends State<PatientRecord> {
                                       labelStyle: TextStyle(
                                           fontSize: 24.0,
                                           fontFamily: 'Times New Roman',
-                                          color: Colors.black),
+                                          color: Colors.white),
                                       hintText: 'Select your gender',
                                       hintStyle: TextStyle(
                                           fontSize: 24.0,
                                           fontFamily: 'Times New Roman',
                                           color: Colors.grey),
-                                      prefixIcon: Icon(Icons.person,size: 30,),
+                                      prefixIcon: Icon(Icons.person),
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -227,11 +193,11 @@ class _PatientRecordState extends State<PatientRecord> {
                                   ),
                                 ),
                               ),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               // TextFormField(
-                              //   style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+                              //   style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
                               //   keyboardType: TextInputType.emailAddress,
                               //   controller: timeController,
                               //   decoration: InputDecoration(
@@ -241,7 +207,7 @@ class _PatientRecordState extends State<PatientRecord> {
                               //           color: Colors.black26,
                               //           fontSize: 20),
                               //       prefixIcon:
-                              //       const Icon(Icons.timer_sharp,size: 30,color: Colors.black,),
+                              //       const Icon(Icons.timer_sharp),
                               //       prefixIconColor: Colors.white,
                               //       border: OutlineInputBorder(
                               //         borderRadius:
@@ -270,7 +236,7 @@ class _PatientRecordState extends State<PatientRecord> {
                               // ),
                               // SizedBox(height: 10,),
                               // TextFormField(
-                              //   style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+                              //   style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
                               //   keyboardType: TextInputType.text,
                               //   controller: dateController,
                               //   decoration: InputDecoration(
@@ -281,7 +247,7 @@ class _PatientRecordState extends State<PatientRecord> {
                               //           color: Colors.black26,
                               //           fontSize: 18),
                               //       prefixIcon:
-                              //       const Icon(Icons.date_range_outlined,size: 30,color: Colors.black,),
+                              //       const Icon(Icons.date_range_outlined),
                               //       prefixIconColor: Colors.white,
                               //       border: OutlineInputBorder(
                               //         borderRadius:
@@ -310,12 +276,12 @@ class _PatientRecordState extends State<PatientRecord> {
                               //   readOnly: true,
                               //   onTap:() => _selectDate(context),
                               // ),
-                              SizedBox(height: 10,),
+                              // SizedBox(height: 10,),
                               Container(
                                 padding: const EdgeInsets.all(14),
-                                height:60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                  color:Colors.transparent,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Colors.blue, // Border color
@@ -325,9 +291,19 @@ class _PatientRecordState extends State<PatientRecord> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.person,size: 30,),
-                                    const SizedBox(width: 10,),
-                                    Text("Body Temerature = $bodytemp",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    const Icon(
+                                      Icons.person,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Body Temerature = $bodytemp",
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
@@ -336,9 +312,9 @@ class _PatientRecordState extends State<PatientRecord> {
                               ),
                               Container(
                                 padding: const EdgeInsets.all(14),
-                                height:60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                  color:Colors.transparent,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Colors.blue, // Border color
@@ -348,9 +324,19 @@ class _PatientRecordState extends State<PatientRecord> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.hot_tub,size: 30,),
-                                    const SizedBox(width: 10,),
-                                    Text("Room Temperature = $roomtemp",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    const Icon(
+                                      Icons.hot_tub,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Room Temperature = $roomtemp",
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
@@ -359,9 +345,9 @@ class _PatientRecordState extends State<PatientRecord> {
                               ),
                               Container(
                                 padding: const EdgeInsets.all(10),
-                                height:60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                  color:Colors.transparent,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Colors.blue, // Border color
@@ -371,9 +357,19 @@ class _PatientRecordState extends State<PatientRecord> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.ac_unit_rounded,size: 30,),
-                                    const SizedBox(width: 10,),
-                                    Text("Room Humidity = $roomhum" ,style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    const Icon(
+                                      Icons.ac_unit_rounded,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Room Humidity = $roomhum",
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
@@ -382,9 +378,9 @@ class _PatientRecordState extends State<PatientRecord> {
                               ),
                               Container(
                                 padding: const EdgeInsets.all(10),
-                                height:60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                  color:Colors.transparent,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Colors.blue, // Border color
@@ -394,18 +390,30 @@ class _PatientRecordState extends State<PatientRecord> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.stacked_bar_chart_outlined,size: 30,),
-                                    const SizedBox(width: 10,),
-                                    Text("Total Steps Counts = $steps",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    const Icon(
+                                      Icons.stacked_bar_chart_outlined,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Total Steps Counts = $steps",
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 10,),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Container(
                                 padding: const EdgeInsets.all(10),
-                                height:60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                  color:Colors.transparent,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Colors.blue, // Border color
@@ -415,17 +423,87 @@ class _PatientRecordState extends State<PatientRecord> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.stream,size: 30,),
-                                    SizedBox(width: 10,),
-                                    Text("Stress Level = $stress",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),)
+                                    const Icon(
+                                      Icons.stream,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Stress Level = $stress",
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 20,),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               RoundButton(
                                 title: 'Store Records',
-                                onTap: (){}
-                              ),
+                                onTap: () async {
+                                  String StringAge = ageController.text.trim();
+                                  int Age = int.parse(StringAge);
+                                  String Gender = _selectedGender.toString();
+                                  String BodyTemperature = bodytemp;
+                                  String RoomTemperature = roomtemp;
+                                  String Roomhumidity = roomhum;
+                                  String Steps = steps;
+                                  String Stress = stress;
+                                  final User? user = _auth.currentUser;
+                                  if (user != null) {
+                                    FirebaseFirestore firestore =
+                                        FirebaseFirestore.instance;
+                                    DocumentReference<Map<String, dynamic>>
+                                        reference = firestore
+                                            .collection("Patients Records")
+                                            .doc(user.uid);
+                                    CollectionReference historicalItems =
+                                        firestore
+                                            .collection('Patients History');
+                                    Map<String, dynamic> currentData = {
+                                      'Age': Age,
+                                      'Body_Temperature': BodyTemperature,
+                                      'Gender': Gender,
+                                      'Room_Temperature': RoomTemperature,
+                                      'Room_humidity': Roomhumidity,
+                                      'Steps': Steps,
+                                      'Stress': Stress,
+                                      'Timestamp': FieldValue.serverTimestamp(),
+                                    };
+
+                                    reference.update(currentData).then((_) {
+                                      print(
+                                          'Document data (Current Data) added successfully');
+
+                                      // Create a historical record with a timestamp
+                                      Map<String, dynamic> historicalData = {
+                                        'data': currentData,
+                                      };
+                                      historicalItems.add(historicalData).then(
+                                          (DocumentReference
+                                              historicalDocument) {
+                                        print(
+                                            'Document ID (Historical Data): ${historicalDocument.id}');
+                                      }).catchError((error) {
+                                        print(
+                                            'Error adding historical document: $error');
+                                      });
+                                    }).catchError((error) {
+                                      print(
+                                          'Error adding current document: $error');
+                                    });
+
+                                    ageController.clear();
+                                    genderController.clear();
+                                  } else {
+                                    print('User is not authenticated.');
+                                  }
+                                },
+                              )
                             ],
                           );
                         }
@@ -439,3 +517,15 @@ class _PatientRecordState extends State<PatientRecord> {
     );
   }
 }
+
+// reference.doc(user!.uid).set(
+// {
+// 'Age':Age,
+// 'Gender':Gender,
+// 'Body_Temperature':BodyTemperature,
+// 'Room_Temperature':RoomTemperature,
+// 'Room_humidity':Roomhumidity,
+// 'Steps':Steps,
+// 'Stress':Stress,
+// 'Timestamp': FieldValue.serverTimestamp(),
+// }
