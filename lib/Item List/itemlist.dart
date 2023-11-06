@@ -6,7 +6,7 @@ List items = [
     "image": "assets/images/patient-monitoring-system.jpg"
   },
   {
-    "header": "Ambient Temperature",
+    "header": "Environment Temperature",
     "description":
     "Current Room's Temperature & Humidity",
     "image": "assets/images/ambient.jpg"
@@ -18,15 +18,15 @@ List items = [
     "image": "assets/images/patientfever.jpg"
   },
   {
-    "header": "BP Status",
+    "header": "Steps Counts",
     "description":
-    "Monitoring your Blood Pressure",
+    "Monitoring your Steps Counts",
     "image": "assets/images/bp.JPG"
   },
   {
-    "header": "Patient ECG Status",
+    "header": "Stress Level",
     "description":
-    "Monitoring yours ECG",
-    "image": "assets/images/ecg.jpg"
-  }
+    "Monitoring your Stress Level",
+    "image": "assets/images/bp.JPG"
+  },
 ];

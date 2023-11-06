@@ -5,7 +5,6 @@ import '../Drawer/Drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -69,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Colors.red, width: 5.0)),
+                                        color: Colors.black.withOpacity(0.5), width: 5.0)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
@@ -127,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: Colors.red, width: 5.0)),
+                                            color: Colors.black.withOpacity(0.5), width: 5.0)),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -245,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: screenWidth * 0.46,
                                     decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: Colors.red, width: 5.0)),
+                                            color: Colors.black.withOpacity(0.5), width: 5.0)),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,

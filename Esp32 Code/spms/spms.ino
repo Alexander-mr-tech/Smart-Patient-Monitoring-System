@@ -63,14 +63,13 @@ void loop() {
   // int dallas_temp = sensors.getTempCByIndex(0);
   // int temperatureF = sensors.getTempFByIndex(0);
   byte temperature = 0;
-byte humidity = 0;
+  byte humidity = 0;
 int err = SimpleDHTErrSuccess;
   if ((err = dht11.read(&temperature, &humidity, NULL)) != SimpleDHTErrSuccess) {
     Serial.print("Read DHT11 failed, err="); Serial.print(SimpleDHTErrCode(err));
     Serial.print(","); Serial.println(SimpleDHTErrDuration(err)); delay(1000);
     return;
   }
-
 sensors_event_t event;
   accel.getEvent(&event);
   double x = event.acceleration.x;
@@ -84,7 +83,7 @@ sensors_event_t event;
   lastX = x;
   lastY = y;
   lastZ = z;
-  delay(500);
+  delay(200);
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_RED,ST7735_WHITE);
@@ -111,7 +110,7 @@ sensors_event_t event;
   tft.setCursor(66, 140);
   tft.println("HIGH");
 
-  delay(1000);
+  delay(200);
 
   Firebase.setInt(firebaseData,"/All Parameters/Environment Temperature/Temperature",temperature);
   if (firebaseData.dataType() == "null") {
