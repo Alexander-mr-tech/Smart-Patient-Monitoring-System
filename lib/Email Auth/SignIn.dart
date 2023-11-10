@@ -169,7 +169,7 @@ class _SigninState extends State<Signin> {
                                 height: 5,
                               ),
                               TextFormField(
-                                style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
+                                style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.black),
                                 keyboardType: TextInputType.text,
                                 controller: passwordcontroller,
                                 obscureText: _obscureText,
