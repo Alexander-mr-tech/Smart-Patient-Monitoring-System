@@ -68,10 +68,10 @@ class _PredicationScreenState extends State<PredicationScreen> {
         decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
+              end: Alignment.bottomRight,
               colors: [
-                Colors.deepPurpleAccent,
                 Colors.cyan,
+                Colors.deepPurpleAccent,
               ],
             )),
         child: SingleChildScrollView(
