@@ -164,7 +164,7 @@ Widget buildMenuItems(BuildContext context) => Container(
                 fontWeight: FontWeight.bold),
           ),
           onTap: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const predication_screen())),
+              .push(MaterialPageRoute(builder: (context) => const PredicationScreen())),
         ),
         const Divider(
           color: Colors.blue,

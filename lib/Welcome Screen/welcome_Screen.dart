@@ -27,22 +27,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             flex: 1,
             fit: FlexFit.tight,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: <Widget>[
-                  Text(item['header'],
+                  const SizedBox(height: 20,),
+                  Text(item['header'],textAlign:TextAlign.center,
                       style: const TextStyle(
-                          fontSize: 50.0,
+                          fontSize: 45.0,
                           fontWeight: FontWeight.w300,
                           color: Color(0XFF3F3D56),
                           height: 1.0),
-                      textAlign: TextAlign.center),
+                      ),
+                  const SizedBox(height: 30,),
                   Text(
                     item['description'],
                     style: const TextStyle(
                         color: Colors.grey,
                         letterSpacing: 1.2,
-                        fontSize: 16.0,
+                        fontSize: 20.0,
                         height: 1.3),
                     textAlign: TextAlign.center,
                   )

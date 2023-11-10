@@ -4,152 +4,261 @@ import 'package:smart_patient_monitoring_system/widgets/Button/rounded_button.da
 
 import '../Drawer/Drawer.dart';
 
-class predication_screen extends StatefulWidget {
-  const predication_screen({super.key});
+class PredicationScreen extends StatefulWidget {
+  const PredicationScreen({super.key});
   @override
-  State<predication_screen> createState() => _predication_screenState();
+  State<PredicationScreen> createState() => _PredicationScreenState();
 }
 
-class _predication_screenState extends State<predication_screen> {
-  void _showDialog(){
-    showDialog(context: context, builder: (context){
-      return CupertinoAlertDialog(
-        title: Column(
-          children: [
-            Image.asset("assets/images/Predication.png"),
-            const SizedBox(height: 10,),
-            const Text("Predication Result"),
-            const SizedBox(height: 10,),
-            const Text("Stress Level"),
-            const SizedBox(height: 10,),
-            const Text("Normal",textAlign: TextAlign.center,style: TextStyle(fontSize: 24,color: Colors.lightGreenAccent),),
-            // const Text("Title"),
-          ],
-        ),
-        // content: const Text("Content, more info"),
-        actions: [
-          MaterialButton(
-            color: Colors.blue,
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const predication_screen()));
+class _PredicationScreenState extends State<PredicationScreen> {
 
-            },
-            child: const Text("Close"),
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController bodyTemperatureController =
+  TextEditingController();
+  final TextEditingController roomTemperatureController =
+  TextEditingController();
+  final TextEditingController roomHumidityController = TextEditingController();
+  final TextEditingController patientStepsController = TextEditingController();
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Column(
+            children: [
+              Image.asset("assets/images/Predication.png"),
+              const SizedBox(height: 10,),
+              const Text("Predication Result"),
+              const SizedBox(height: 10,),
+              const Text("Stress Level"),
+              const SizedBox(height: 10,),
+              const Text(
+                "Normal",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24, color: Colors.lightGreenAccent),
+              ),
+            ],
           ),
-        ],
-      );
-    });
+          actions: [
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
   }
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
       drawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text("Predication"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              const Text("Enter Patient's Reading Here \n to\n Predicate Results",textAlign:TextAlign.center,style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 20,),
-              TextFormField(
-                decoration: const InputDecoration(
-                    labelText: "Body Temperature",
-                    labelStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
+      body: Container(
+        height: screenHeight*1,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.deepPurpleAccent,
+                Colors.cyan,
+              ],
+            )),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  const Text("Enter Patient's Reading Here \n to\n Predicate Results",textAlign:TextAlign.center,style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 20,),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
+                    keyboardType: TextInputType.number,
+                    controller: bodyTemperatureController,
+                    decoration: InputDecoration(
+                        labelText: "Body Temperature",
+                        labelStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          width: 2,
-                        ))),
-                // onChanged: (String gpa) {
-                //   getStudentGpa(gpa);
-                // }
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    labelText: "Room Temperature",
-                    labelStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ))),
-                // onChanged: (String gpa) {
-                //   getStudentGpa(gpa);
-                // }
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    labelText: "Room Humidity",
-                    labelStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ))),
-                // onChanged: (String gpa) {
-                //   getStudentGpa(gpa);
-                // }
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    labelText: "Patient Steps",
-                    labelStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ))),
-                // onChanged: (String gpa) {
-                //   getStudentGpa(gpa);
-                // }
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RoundButton(
-                    title: 'Predication',
-                    onTap: _showDialog,
+                        ),
+                        prefixIcon:
+                        const Icon(Icons.health_and_safety_outlined),
+                        prefixIconColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 4.0, color: Colors.grey),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 3.0, color: Colors.white),
+                        )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter Body Temperature';
+                      }
+                      return null;
+                    },
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
+                    keyboardType: TextInputType.number,
+                    controller: bodyTemperatureController,
+                    decoration: InputDecoration(
+                        labelText: "Room Temperature",
+                        labelStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        prefixIcon:
+                        const Icon(Icons.hot_tub),
+                        prefixIconColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 4.0, color: Colors.grey),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 3.0, color: Colors.white),
+                        )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter Room Temperature';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
+                    keyboardType: TextInputType.number,
+                    controller: roomTemperatureController,
+                    decoration: InputDecoration(
+                        labelText: "Room Humidity",
+                        labelStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        prefixIcon:
+                        const Icon(Icons.severe_cold),
+                        prefixIconColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 4.0, color: Colors.grey),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 3.0, color: Colors.white),
+                        )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter Room Humidity';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
+                    keyboardType: TextInputType.number,
+                    controller: patientStepsController,
+                    decoration: InputDecoration(
+                        labelText: "Patient's Steps",
+                        labelStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        prefixIcon:
+                        const Icon(Icons.add_chart),
+                        prefixIconColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 4.0, color: Colors.grey),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Set the border radius for focused state
+                          borderSide: const BorderSide(
+                              width: 3.0, color: Colors.white),
+                        )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter Patient's Steps";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RoundButton(
+                        title: 'Predication',
+                        onTap:  (){
+                          if (_formKey.currentState!.validate()) {
+                            _showDialog();
+                          }
+                        },
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

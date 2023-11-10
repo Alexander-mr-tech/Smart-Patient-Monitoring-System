@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState(){
     super.initState();
-    Future.delayed(const Duration(seconds: 3)).then((value){
+    Future.delayed(const Duration(seconds: 5)).then((value){
       Navigator.of(context).pushReplacement(
           CupertinoPageRoute(builder: (ctx)=> WelcomeScreen()));
     });
@@ -24,33 +24,41 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.deepPurpleAccent,
-                Colors.cyan,
-              ],
-            )),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Smart\n Health Monitoring \nSystem",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 36),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SpinKitPumpingHeart(
-              color: Colors.red,
-              size: 100.0,
-            )
-          ],
+          image: DecorationImage(
+            opacity: 0.4,
+            image: AssetImage('assets/images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+        child: Stack(
+            children: [
+              const Positioned(
+                left: 235,
+                top: 200,
+                child: SpinKitPumpingHeart(
+                  color: Colors.red,
+                  size: 60.0,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Smart \nPatient\nMonitoring\nSystem".toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontFamily: 'Times New Roman',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                      wordSpacing: 2,
+                      letterSpacing: 2,
+                      color: Colors.blueAccent),
+                ),
+              ),
+            ],
+          ),
+        ),
     );
   }
 }
