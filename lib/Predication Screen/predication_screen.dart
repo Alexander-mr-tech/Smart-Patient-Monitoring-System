@@ -55,7 +55,6 @@ class _PredicationScreenState extends State<PredicationScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: const MyDrawer(),
@@ -126,7 +125,7 @@ class _PredicationScreenState extends State<PredicationScreen> {
                   TextFormField(
                     style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
                     keyboardType: TextInputType.number,
-                    controller: bodyTemperatureController,
+                    controller: roomTemperatureController,
                     decoration: InputDecoration(
                         labelText: "Room Temperature",
                         labelStyle: const TextStyle(
@@ -166,7 +165,7 @@ class _PredicationScreenState extends State<PredicationScreen> {
                   TextFormField(
                     style: const TextStyle(fontSize: 24.0,fontFamily: 'Times New Roman',color: Colors.white),
                     keyboardType: TextInputType.number,
-                    controller: roomTemperatureController,
+                    controller: roomHumidityController,
                     decoration: InputDecoration(
                         labelText: "Room Humidity",
                         labelStyle: const TextStyle(
