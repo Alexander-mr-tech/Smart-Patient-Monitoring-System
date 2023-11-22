@@ -61,7 +61,7 @@ void setup() {
 void loop() {
   sensors.requestTemperatures();
   int dallas_tempC = sensors.getTempCByIndex(0);
-  int dallas_tempF = DallasTemperature::toFahrenheit(dallas_tempC);
+  float dallas_tempF = DallasTemperature::toFahrenheit(dallas_tempC);
   // int dallas_temp = sensors.getTempCByIndex(0);
   // int temperatureF = sensors.getTempFByIndex(0);
   byte temperature = 0;
@@ -102,15 +102,15 @@ void loop() {
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE, ST7735_WHITE);
-  tft.setCursor(22, 114);
+  tft.setCursor(12, 114);
   tft.println(dallas_tempF);
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_RED, ST7735_WHITE);
   tft.setCursor(80, 114);
-  tft.println(steps);
+  tft.println((int)steps);
 
-  if (steps < 10 || steps < 91 && humidity > 10 || humidity < 15 && dallas_tempF > 79 || dallas_tempF < 84) {
+  if (steps < 10 || steps < 91 && humidity > 30 || humidity < 45 && dallas_tempF > 79 || dallas_tempF < 84) {
     Serial.println("LOW");
     stresslevel = "Low   ";
     tft.setTextSize(2);
@@ -118,7 +118,7 @@ void loop() {
     tft.setCursor(50, 140);
     tft.println(stresslevel);
   }
-  else if (steps > 92 || steps < 129 && humidity > 15 || humidity < 20 && dallas_tempF > 84 || dallas_tempF < 95) {
+  else if (steps > 92 || steps < 129 && humidity > 45 || humidity < 60 && dallas_tempF > 84 || dallas_tempF < 95) {
     Serial.println("Normal");
     stresslevel = "Normal";
     tft.setTextSize(2);
@@ -126,7 +126,7 @@ void loop() {
     tft.setCursor(50, 140);
     tft.println(stresslevel);
   }
-  else if (steps > 130 || steps < 200 && humidity > 20 || humidity < 30 && dallas_tempF > 95 || dallas_tempF < 99){
+  else{
     Serial.println("High");
     stresslevel = "High";
     tft.setTextSize(2);

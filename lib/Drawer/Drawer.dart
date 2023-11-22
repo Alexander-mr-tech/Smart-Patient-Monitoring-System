@@ -53,19 +53,19 @@ Widget buildHeader(BuildContext context, String userEmail) => Container(
   child: Column(
     children: [
       const CircleAvatar(
-        radius: 70,
+        radius: 60,
         backgroundColor: Colors.blue,
         child: CircleAvatar(
           backgroundColor: Colors.white,
-          radius: 67,
-          backgroundImage: AssetImage('assets/images/Profile Image.png'),
+          radius: 57,
+          child: Icon(Icons.person,size: 100,),
         ),
       ),
       const SizedBox(
         height: 12,
       ),
       const Text(
-        "S P M S",
+        "Smart Patient Monitoring System ",textAlign: TextAlign.center,
         style: TextStyle(fontSize: 28, color: Colors.white),
       ),
       const SizedBox(
