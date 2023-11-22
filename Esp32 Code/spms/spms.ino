@@ -102,8 +102,8 @@ void loop() {
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_BLUE, ST7735_WHITE);
-  tft.setCursor(12, 114);
-  tft.println(dallas_tempF);
+  tft.setCursor(6, 114);
+  tft.println(dallas_tempF,1);
 
   tft.setTextSize(2);
   tft.setTextColor(ST7735_RED, ST7735_WHITE);
